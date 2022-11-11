@@ -39,14 +39,24 @@ class ViewController: UIViewController {
         
         let acrossList = [across5, across4, across3, across2, across1]
         let nonAcross = (numButtons - 1) - puzzleList[puzzleIndex].across
-        for i in 0...nonAcross {
-            acrossList[i]?.isHidden = true
+        for i in 0...4 {
+            if i <= nonAcross {
+                acrossList[i]?.isHidden = true
+            } else {
+                acrossList[i]?.setTitle(String(puzzleList[puzzleIndex].acrossList[((numButtons - 1) - i)].clueNum), for: .normal)
+            }
         }
         let downList = [down5, down4, down3, down2, down1]
         let nonDown = (numButtons - 1) - puzzleList[puzzleIndex].down
-        for i in 0...nonDown {
-            downList[i]?.isHidden = true
+        for i in 0...4 {
+            if i <= nonDown {
+                downList[i]?.isHidden = true
+            } else {
+                downList[i]?.setTitle(String(puzzleList[puzzleIndex].downList[((numButtons - 1) - i)].clueNum), for: .normal)
+            }
         }
+        
+        print(puzzleList[puzzleIndex].acrossList)
     }
     
     @IBAction func buttonPressed(_ sender: UIButton) {

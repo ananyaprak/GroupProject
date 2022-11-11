@@ -9,10 +9,12 @@ import UIKit
 
 public class Word {
     var name:String
+    var clueNum:Int
     var tries:Int
     
-    init(name:String) {
+    init(name:String, clueNum:Int) {
         self.name = name
+        self.clueNum = clueNum
         self.tries = 0
     }
     
@@ -60,8 +62,14 @@ class TableViewController: UITableViewController {
             
         }
         
-        let newPuzzle = Puzzle(title: "hehe", down: 1, across: 2, image: "utaustin-crossword")
+        var newPuzzle = Puzzle(title: "hehe", down: 1, across: 2, image: "utaustin-crossword")
         puzzleList.append(newPuzzle)
+        var newWord = Word(name: "hello", clueNum: 1)
+        newPuzzle.addDown(word: newWord)
+        newWord = Word(name: "seeya", clueNum: 1)
+        newPuzzle.addAcross(word: newWord)
+        newWord = Word(name: "goodbye", clueNum: 2)
+        newPuzzle.addAcross(word: newWord)
         
         tableView.reloadData()
 
