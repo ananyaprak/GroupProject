@@ -1,8 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "utaustin-crossword.png",
-      "idiom" : "universal"
+      "filename" : "Screen Shot 2022-11-10 at 10.03.04 PM.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {

@@ -29,6 +29,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var down4: UIButton!
     @IBOutlet weak var down5: UIButton!
     
+    var currentWord:Word?
+    @IBOutlet weak var guessField: UITextField!
+    var currentButton:UIButton?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         puzzleImage.image = puzzleList[puzzleIndex].image
@@ -38,7 +43,7 @@ class ViewController: UIViewController {
         wordBlanks.text = ""
         
         let acrossList = [across5, across4, across3, across2, across1]
-        let nonAcross = (numButtons - 1) - puzzleList[puzzleIndex].across
+        let nonAcross = (numButtons - 1) - puzzleList[puzzleIndex].acrossList.count
         for i in 0...4 {
             if i <= nonAcross {
                 acrossList[i]?.isHidden = true
@@ -47,7 +52,7 @@ class ViewController: UIViewController {
             }
         }
         let downList = [down5, down4, down3, down2, down1]
-        let nonDown = (numButtons - 1) - puzzleList[puzzleIndex].down
+        let nonDown = (numButtons - 1) - puzzleList[puzzleIndex].downList.count
         for i in 0...4 {
             if i <= nonDown {
                 downList[i]?.isHidden = true
@@ -68,7 +73,58 @@ class ViewController: UIViewController {
         }
         let button = sender.titleLabel!.text! + " " + clueType
         wordSelected.text = "Selected: \(button)"
+        
+        currentButton = sender
+        
+        var word = ""
+        if clueType == "Across" {
+            for clue in puzzleList[puzzleIndex].acrossList {
+                if button == clue.tag {
+                    word = clue.name
+                    wordTries.text = "Tries: " + String(clue.tries)
+                    currentWord = clue
+                }
+            }
+        } else if clueType == "Down" {
+            for clue in puzzleList[puzzleIndex].downList {
+                if button == clue.tag {
+                    word = clue.name
+                    wordTries.text = "Tries: " + String(clue.tries)
+                    currentWord = clue
+                }
+            }
+        }
+        let wordComponents = Array(word)
+        var wordSeparated = ""
+        for _ in wordComponents {
+            wordSeparated += "_ "
+        }
+        wordBlanks.text = String(wordSeparated.dropLast())
     }
+    
+    @IBAction func guessPressed(_ sender: Any) {
+        if currentWord != nil {
+            if guessField.text!.count == 0 {
+                wordTries.text = "Don't forget to guess!"
+            } else if guessField.text!.count != currentWord!.name.count {
+                wordTries.text = "Invalid - check number of letters"
+            } else if guessField.text != currentWord?.name {
+                currentWord?.tries += 1
+                wordTries.text = "Tries: \(currentWord!.tries)"
+                puzzleList[puzzleIndex].totalTries += 1
+                totalTries.text = "Total Tries: \(puzzleList[puzzleIndex].totalTries)"
+            } else if guessField.text == currentWord?.name {
+                currentWord?.tries += 1
+                wordTries.text = "Correct! Tries: \(currentWord!.tries)"
+                puzzleList[puzzleIndex].totalTries += 1
+                totalTries.text = "Total Tries: \(puzzleList[puzzleIndex].totalTries)"
+                currentButton?.isHidden = true
+            }
+        } else {
+            wordTries.text = "Choose a clue first"
+        }
+    }
+    
     
     
     

@@ -10,11 +10,13 @@ import UIKit
 public class Word {
     var name:String
     var clueNum:Int
+    var tag:String
     var tries:Int
     
     init(name:String, clueNum:Int) {
         self.name = name
         self.clueNum = clueNum
+        self.tag = "tba"
         self.tries = 0
     }
     
@@ -23,28 +25,26 @@ public class Word {
 public class Puzzle {
     var title:String
     var status:String
-    var down:Int
-    var across:Int
     var image:UIImage
     var totalTries:Int
     
     var acrossList:[Word] = []
     var downList:[Word] = []
     
-    init(title:String, status:String = "Locked", down:Int, across:Int, image:String) {
+    init(title:String, status:String = "Locked", image:String) {
         self.title = title
         self.status = status
-        self.down = down
-        self.across = across
         self.image = UIImage(named: image)!
         self.totalTries = 0
     }
     
     func addAcross(word:Word) {
+        word.tag = String(word.clueNum) + " Across"
         acrossList.append(word)
     }
     
     func addDown(word:Word) {
+        word.tag = String(word.clueNum) + " Down"
         downList.append(word)
     }
 }
@@ -59,17 +59,21 @@ class TableViewController: UITableViewController {
         super.viewDidLoad()
         
         if puzzleList.isEmpty {
-            
+            var newPuzzle = Puzzle(title: "UT Austin", image: "utaustin-crossword")
+            puzzleList.append(newPuzzle)
+            var newWord = Word(name: "bevo", clueNum: 3)
+            newPuzzle.addAcross(word: newWord)
+            newWord = Word(name: "longhorns", clueNum: 4)
+            newPuzzle.addAcross(word: newWord)
+            newWord = Word(name: "speedway", clueNum: 6)
+            newPuzzle.addAcross(word: newWord)
+            newWord = Word(name: "tower", clueNum: 1)
+            newPuzzle.addDown(word: newWord)
+            newWord = Word(name: "hornsup", clueNum: 2)
+            newPuzzle.addDown(word: newWord)
+            newWord = Word(name: "jester", clueNum: 5)
+            newPuzzle.addDown(word: newWord)
         }
-        
-        var newPuzzle = Puzzle(title: "hehe", down: 1, across: 2, image: "utaustin-crossword")
-        puzzleList.append(newPuzzle)
-        var newWord = Word(name: "hello", clueNum: 1)
-        newPuzzle.addDown(word: newWord)
-        newWord = Word(name: "seeya", clueNum: 1)
-        newPuzzle.addAcross(word: newWord)
-        newWord = Word(name: "goodbye", clueNum: 2)
-        newPuzzle.addAcross(word: newWord)
         
         tableView.reloadData()
 
