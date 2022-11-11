@@ -42,26 +42,29 @@ class ViewController: UIViewController {
         wordSelected.text = ""
         wordBlanks.text = ""
         
-        let acrossList = [across5, across4, across3, across2, across1]
-        let nonAcross = (numButtons - 1) - puzzleList[puzzleIndex].acrossList.count
-        for i in 0...4 {
-            if i <= nonAcross {
-                acrossList[i]?.isHidden = true
-            } else {
-                acrossList[i]?.setTitle(String(puzzleList[puzzleIndex].acrossList[((numButtons - 1) - i)].clueNum), for: .normal)
-            }
-        }
-        let downList = [down5, down4, down3, down2, down1]
-        let nonDown = (numButtons - 1) - puzzleList[puzzleIndex].downList.count
-        for i in 0...4 {
-            if i <= nonDown {
-                downList[i]?.isHidden = true
-            } else {
-                downList[i]?.setTitle(String(puzzleList[puzzleIndex].downList[((numButtons - 1) - i)].clueNum), for: .normal)
-            }
+        clueButtons(isAcross: true)
+        clueButtons(isAcross: false)
+    }
+    
+    func clueButtons(isAcross:Bool) {
+        var directionList:Array<UIButton>
+        var puzzleDirectionList:Array<Word>
+        if isAcross {
+            directionList = [across5, across4, across3, across2, across1]
+            puzzleDirectionList = puzzleList[puzzleIndex].acrossList
+        } else {
+            directionList = [down5, down4, down3, down2, down1]
+            puzzleDirectionList = puzzleList[puzzleIndex].downList
         }
         
-        print(puzzleList[puzzleIndex].acrossList)
+        let nonIncluded = (numButtons - 1) - puzzleDirectionList.count
+        for i in 0...4 {
+            if i <= nonIncluded {
+                directionList[i].isHidden = true
+            } else {
+                directionList[i].setTitle(String(puzzleDirectionList[((numButtons - 1) - i)].clueNum), for: .normal)
+            }
+        }
     }
     
     @IBAction func buttonPressed(_ sender: UIButton) {
@@ -102,6 +105,19 @@ class ViewController: UIViewController {
         wordBlanks.text = String(wordSeparated.dropLast())
     }
     
+    func incrementTries(correct:Bool) {
+        puzzleList[puzzleIndex].totalTries += 1
+        totalTries.text = "Total Tries: \(puzzleList[puzzleIndex].totalTries)"
+        
+        currentWord?.tries += 1
+        if correct {
+            wordTries.text = "Correct! Tries: \(currentWord!.tries)"
+        } else {
+            wordTries.text = "Tries: \(currentWord!.tries)"
+        }
+        
+    }
+    
     @IBAction func guessPressed(_ sender: Any) {
         if currentWord != nil {
             if guessField.text!.count == 0 {
@@ -109,15 +125,9 @@ class ViewController: UIViewController {
             } else if guessField.text!.count != currentWord!.name.count {
                 wordTries.text = "Invalid - check number of letters"
             } else if guessField.text != currentWord?.name {
-                currentWord?.tries += 1
-                wordTries.text = "Tries: \(currentWord!.tries)"
-                puzzleList[puzzleIndex].totalTries += 1
-                totalTries.text = "Total Tries: \(puzzleList[puzzleIndex].totalTries)"
+                incrementTries(correct: false)
             } else if guessField.text == currentWord?.name {
-                currentWord?.tries += 1
-                wordTries.text = "Correct! Tries: \(currentWord!.tries)"
-                puzzleList[puzzleIndex].totalTries += 1
-                totalTries.text = "Total Tries: \(puzzleList[puzzleIndex].totalTries)"
+                incrementTries(correct: true)
                 currentButton?.isHidden = true
             }
         } else {
