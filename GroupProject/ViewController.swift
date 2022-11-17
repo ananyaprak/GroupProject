@@ -129,6 +129,8 @@ class ViewController: UIViewController {
             } else if guessField.text == currentWord?.name {
                 incrementTries(correct: true)
                 currentButton?.isHidden = true
+                // clear text field
+                // clear current word
             }
         } else {
             wordTries.text = "Choose a clue first"
