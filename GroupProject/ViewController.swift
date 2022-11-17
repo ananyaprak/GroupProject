@@ -32,6 +32,7 @@ class ViewController: UIViewController {
     var currentWord:Word?
     @IBOutlet weak var guessField: UITextField!
     var currentButton:UIButton?
+    var cluesCompleted = [String]()
     
     
     override func viewDidLoad() {
@@ -99,8 +100,14 @@ class ViewController: UIViewController {
         }
         let wordComponents = Array(word)
         var wordSeparated = ""
-        for _ in wordComponents {
-            wordSeparated += "_ "
+        var currentLetter = 0
+        for letter in wordComponents {
+            if currentWord?.knownLetters[currentLetter] == true {
+                wordSeparated += "\(letter) "
+            } else {
+                wordSeparated += "_ "
+            }
+            currentLetter += 1
         }
         wordBlanks.text = String(wordSeparated.dropLast())
     }
@@ -126,11 +133,16 @@ class ViewController: UIViewController {
                 wordTries.text = "Invalid - check number of letters"
             } else if guessField.text != currentWord?.name {
                 incrementTries(correct: false)
+                // TODO: add letters to wordle slots
             } else if guessField.text == currentWord?.name {
                 incrementTries(correct: true)
-                currentButton?.isHidden = true
-                // clear text field
-                // clear current word
+                currentButton?.tintColor = .gray
+                guessField.text = ""
+                currentWord = nil
+                wordSelected.text = ""
+                wordBlanks.text = ""
+                wordTries.text = ""
+                // cluesCompleted.append(<#T##newElement: String##String#>)
             }
         } else {
             wordTries.text = "Choose a clue first"

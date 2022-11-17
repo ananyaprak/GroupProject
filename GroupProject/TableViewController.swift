@@ -12,12 +12,18 @@ public class Word {
     var clueNum:Int
     var tag:String
     var tries:Int
+    var knownLetters:Array<Bool>
     
     init(name:String, clueNum:Int) {
         self.name = name
         self.clueNum = clueNum
         self.tag = "tba"
         self.tries = 0
+        self.knownLetters = []
+        let wordComponents = Array(name)
+        for _ in wordComponents {
+            self.knownLetters.append(false)
+        }
     }
     
 }
