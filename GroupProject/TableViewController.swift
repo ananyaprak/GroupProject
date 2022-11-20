@@ -65,8 +65,9 @@ class TableViewController: UITableViewController {
         super.viewDidLoad()
         
         if puzzleList.isEmpty {
-            var newPuzzle = Puzzle(title: "UT Austin", image: "utaustin-crossword")
+            var newPuzzle = Puzzle(title: "UT Austin", image: "crossword1")
             puzzleList.append(newPuzzle)
+            // TODO: add more puzzles
             var newWord = Word(name: "bevo", clueNum: 3)
             newPuzzle.addAcross(word: newWord)
             newWord = Word(name: "longhorns", clueNum: 4)
@@ -108,14 +109,15 @@ class TableViewController: UITableViewController {
             tableView.deselectRow(at: indexPath, animated: true)
         }
     
+    // TODO: prevent segue if puzzle is locked
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            let backButton = UIBarButtonItem()
-            backButton.title = "Puzzles"
-            navigationItem.backBarButtonItem = backButton
-            
-            if segue.identifier == "TableToPuzzle",
-               let nextVC = segue.destination as? ViewController,
-               let puzzleIndex = tableView.indexPathForSelectedRow?.row {
+        let backButton = UIBarButtonItem()
+        backButton.title = "Puzzles"
+        navigationItem.backBarButtonItem = backButton
+        
+        if segue.identifier == "TableToPuzzle",
+            let nextVC = segue.destination as? ViewController,
+            let puzzleIndex = tableView.indexPathForSelectedRow?.row {
                 nextVC.delegate = self
                 nextVC.puzzleIndex = puzzleIndex
             }

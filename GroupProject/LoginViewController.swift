@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+// TODO: connect to firebase
 
 class LoginViewController: UIViewController {
 

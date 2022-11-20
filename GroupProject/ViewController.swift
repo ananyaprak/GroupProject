@@ -9,6 +9,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    // TODO: add crossword letter labels
     var delegate: UIViewController!
     var puzzleIndex:Int = 0
     @IBOutlet weak var puzzleImage: UIImageView!
@@ -38,7 +39,15 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = puzzleList[puzzleIndex].title
         puzzleImage.image = puzzleList[puzzleIndex].image
+        
+        if puzzleImage.image == UIImage(named: "crossword1") {
+
+        } else if puzzleImage.image == UIImage(named: "crossword2") {
+
+        }
+        
         totalTries.text = "Total Tries: \(puzzleList[puzzleIndex].totalTries)"
         wordTries.text = ""
         wordSelected.text = ""
@@ -133,6 +142,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func guessPressed(_ sender: Any) {
+        // TODO: add wordle clues
         if currentWord != nil {
             if guessField.text!.count == 0 {
                 wordTries.text = "Don't forget to guess!"
@@ -140,7 +150,6 @@ class ViewController: UIViewController {
                 wordTries.text = "Invalid - check number of letters"
             } else if guessField.text != currentWord?.name {
                 incrementTries(correct: false)
-                // TODO: add letters to wordle slots
             } else if guessField.text == currentWord?.name {
                 incrementTries(correct: true)
                 currentButton?.tintColor = .gray
@@ -150,9 +159,8 @@ class ViewController: UIViewController {
                 wordBlanks.text = ""
                 wordTries.text = ""
                 cluesCompleted.append(button)
-                guessField.isUserInteractionEnabled = false
                 button = ""
-                // TODO: fix this lol
+
             }
         } else {
             wordTries.text = "Choose a clue first"
