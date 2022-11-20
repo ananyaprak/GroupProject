@@ -33,6 +33,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var guessField: UITextField!
     var currentButton:UIButton?
     var cluesCompleted = [String]()
+    var button:String = ""
     
     
     override func viewDidLoad() {
@@ -75,7 +76,7 @@ class ViewController: UIViewController {
         } else {
             clueType = "Down"
         }
-        let button = sender.titleLabel!.text! + " " + clueType
+        button = sender.titleLabel!.text! + " " + clueType
         wordSelected.text = "Selected: \(button)"
         
         currentButton = sender
@@ -110,6 +111,12 @@ class ViewController: UIViewController {
             currentLetter += 1
         }
         wordBlanks.text = String(wordSeparated.dropLast())
+        
+        if cluesCompleted.contains(button) {
+            guessField.isUserInteractionEnabled = false
+        } else {
+            guessField.isUserInteractionEnabled = true
+        }
     }
     
     func incrementTries(correct:Bool) {
@@ -142,7 +149,10 @@ class ViewController: UIViewController {
                 wordSelected.text = ""
                 wordBlanks.text = ""
                 wordTries.text = ""
-                // cluesCompleted.append(<#T##newElement: String##String#>)
+                cluesCompleted.append(button)
+                guessField.isUserInteractionEnabled = false
+                button = ""
+                // TODO: fix this lol
             }
         } else {
             wordTries.text = "Choose a clue first"
