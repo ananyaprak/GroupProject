@@ -5,6 +5,8 @@
 //  Created by AAAVPrakash12 on 10/6/22.
 //
 
+// TODO: add core data :(
+
 import UIKit
 
 class ViewController: UIViewController {
@@ -17,6 +19,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var wordTries: UILabel!
     @IBOutlet weak var wordSelected: UILabel!
     @IBOutlet weak var wordBlanks: UILabel!
+    @IBOutlet weak var durationLabel: UILabel!
     
     let numButtons = 5
     @IBOutlet weak var across1: UIButton!
@@ -35,6 +38,16 @@ class ViewController: UIViewController {
     var currentButton:UIButton?
     var cluesCompleted = [String]()
     var button:String = ""
+    
+    let queue = DispatchQueue(label: "queue")
+    let mainQueue = DispatchQueue.main
+    var timerOn = false
+    
+    let start = DispatchTime.now()
+    var current = DispatchTime(uptimeNanoseconds: 0)
+    var seconds = 0
+    var time = (0, 0, 0)
+    var oldTime = (0, 0, 0)
     
     
     override func viewDidLoad() {
@@ -55,6 +68,55 @@ class ViewController: UIViewController {
         
         clueButtons(isAcross: true)
         clueButtons(isAcross: false)
+        
+        current = DispatchTime(uptimeNanoseconds: puzzleList[puzzleIndex].elapsedTime)
+        if puzzleList[puzzleIndex].status != "Completed" {
+            timerOn = true
+        }
+        nanoToSeconds(nanoTime: puzzleList[puzzleIndex].elapsedTime)
+        oldTime = convertSeconds(seconds: seconds)
+        runBackground()
+    }
+    
+    override func  viewWillDisappear(_ animated: Bool) {
+        timerOn = false
+        let otherVC = delegate as! UpdateTable
+        otherVC.reloadTable()
+    }
+    
+    func runMain(seconds:Int, duration:UInt64) {
+            mainQueue.async {
+                self.time = self.convertSeconds(seconds:self.seconds)
+                let timeText = "\(self.time.0 + self.oldTime.0):\(self.time.1 + self.oldTime.1):\(self.time.2 + self.oldTime.2)"
+                self.durationLabel.text = "Elapsed Time: \(timeText)"
+                puzzleList[self.puzzleIndex].elapsedTime = duration
+                puzzleList[self.puzzleIndex].fancyTime = timeText
+            }
+    }
+    
+    func runBackground() {
+        queue.async {
+            while(self.timerOn == true) {
+                let end = DispatchTime.now()
+
+                let nanoTime = end.uptimeNanoseconds - self.start.uptimeNanoseconds
+                let timeInterval = Double(nanoTime) / 1_000_000_000
+
+                self.seconds = Int(round(timeInterval))
+                self.runMain(seconds:self.seconds, duration:(nanoTime + self.current.uptimeNanoseconds))
+                
+                sleep(1)
+            }
+        }
+    }
+    
+    func nanoToSeconds(nanoTime:UInt64) {
+        let timeInterval = Double(nanoTime) / 1_000_000_000
+        seconds = Int(round(timeInterval))
+    }
+    
+    func convertSeconds(seconds:Int) -> (Int, Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
     }
     
     func clueButtons(isAcross:Bool) {

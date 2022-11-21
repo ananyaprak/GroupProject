@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol UpdateTable {
+    func reloadTable()
+}
+
 public class Word {
     var name:String
     var clueNum:Int
@@ -33,6 +37,8 @@ public class Puzzle {
     var status:String
     var image:UIImage
     var totalTries:Int
+    var elapsedTime:UInt64
+    var fancyTime:String
     
     var acrossList:[Word] = []
     var downList:[Word] = []
@@ -42,6 +48,8 @@ public class Puzzle {
         self.status = status
         self.image = UIImage(named: image)!
         self.totalTries = 0
+        self.elapsedTime = 0
+        self.fancyTime = "0:0:0"
     }
     
     func addAcross(word:Word) {
@@ -57,7 +65,7 @@ public class Puzzle {
 
 public var puzzleList:[Puzzle] = []
 
-class TableViewController: UITableViewController {
+class TableViewController: UITableViewController, UpdateTable {
     
     let textCellIdentifier = "TextCell"
 
@@ -82,7 +90,7 @@ class TableViewController: UITableViewController {
             newPuzzle.addDown(word: newWord)
         }
         
-        tableView.reloadData()
+        reloadTable()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -92,6 +100,10 @@ class TableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
+    
+    func reloadTable() {
+        tableView.reloadData()
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             return puzzleList.count
@@ -100,8 +112,8 @@ class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath)
             let row = indexPath.row
-        cell.textLabel?.text = "\(puzzleList[row].title)\n   \(puzzleList[row].status)"
-            cell.textLabel?.numberOfLines = 2
+        cell.textLabel?.text = "\(puzzleList[row].title)\n   \(puzzleList[row].status)\n   Elapsed Time: \(puzzleList[row].fancyTime)\n   Total Tries: \(puzzleList[row].totalTries)"
+            cell.textLabel?.numberOfLines = 4
             return cell
         }
     
