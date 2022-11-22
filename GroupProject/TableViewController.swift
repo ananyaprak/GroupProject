@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol UpdateTable {
-    func reloadTable()
-}
-
 public class Word {
     var name:String
     var clueNum:Int
@@ -61,11 +57,22 @@ public class Puzzle {
         word.tag = String(word.clueNum) + " Down"
         downList.append(word)
     }
+    
+    func changeStatus(value:Int) {
+        if value == 0 {
+            self.status = "Locked"
+        } else if value == 1 {
+            self.status = "Unlocked"
+        } else if value == 2 {
+            self.status = "Completed"
+        }
+    }
 }
 
 public var puzzleList:[Puzzle] = []
+public var puzzleIndex:Int? = nil
 
-class TableViewController: UITableViewController, UpdateTable {
+class TableViewController: UITableViewController {
     
     let textCellIdentifier = "TextCell"
 
@@ -75,6 +82,7 @@ class TableViewController: UITableViewController, UpdateTable {
         if puzzleList.isEmpty {
             var newPuzzle = Puzzle(title: "UT Austin", image: "crossword1")
             puzzleList.append(newPuzzle)
+            newPuzzle.changeStatus(value: 1)
             // TODO: add more puzzles
             var newWord = Word(name: "bevo", clueNum: 3)
             newPuzzle.addAcross(word: newWord)
@@ -90,7 +98,7 @@ class TableViewController: UITableViewController, UpdateTable {
             newPuzzle.addDown(word: newWord)
         }
         
-        reloadTable()
+        tableView.reloadData()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -101,8 +109,9 @@ class TableViewController: UITableViewController, UpdateTable {
 
     // MARK: - Table view data source
     
-    func reloadTable() {
+    override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
+        puzzleIndex = nil
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -121,49 +130,17 @@ class TableViewController: UITableViewController, UpdateTable {
         }
             cell.textLabel?.numberOfLines = 4
             return cell
-        }
+    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             tableView.deselectRow(at: indexPath, animated: true)
-        // self.performSegue(withIdentifier: "TableToPuzzle", sender: AnyObject.self)
+        puzzleIndex = indexPath.row
+        if puzzleList[puzzleIndex!].status != "Locked" {
+            self.performSegue(withIdentifier: "TableToPuzzle", sender: self)
+        } else {
+            print("alert")
         }
-    
-    func segue(sender: AnyObject) {
-        
     }
-    
-    // TODO: prevent segue if puzzle is locked - IF we decide to do it that way
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let backButton = UIBarButtonItem()
-        backButton.title = "Puzzles"
-        navigationItem.backBarButtonItem = backButton
-
-        if segue.identifier == "TableToPuzzle",
-            let nextVC = segue.destination as? ViewController,
-            let puzzleIndex = tableView.indexPathForSelectedRow?.row {
-                nextVC.delegate = self
-                nextVC.puzzleIndex = puzzleIndex
-            }
-        }
-    
-//    override func shouldPerformSegue(withIdentifier identifier: String?, sender: Any?) -> Bool {
-//        let puzzleIndex = tableView.indexPathForSelectedRow?.row
-//        // let segue = UIStoryboardSegue.self
-//        let nextVC = Segue
-//        let nextVC = segue.destination as? ViewController
-//
-//        if identifier == "TableToPuzzle" {
-//            if puzzleList[puzzleIndex!].status != "Locked" {
-//                return true
-//            } else {
-//                print("alert")
-//                return false
-//            }
-//        } else {
-//            print("Incorrect identifier")
-//            return false
-//        }
-//    }
 
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

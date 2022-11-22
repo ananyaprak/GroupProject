@@ -12,8 +12,6 @@ import UIKit
 class ViewController: UIViewController {
     
     // TODO: add crossword letter labels
-    var delegate: UIViewController!
-    var puzzleIndex:Int = 0
     @IBOutlet weak var puzzleImage: UIImageView!
     @IBOutlet weak var totalTries: UILabel!
     @IBOutlet weak var wordTries: UILabel!
@@ -52,8 +50,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = puzzleList[puzzleIndex].title
-        puzzleImage.image = puzzleList[puzzleIndex].image
+        title = puzzleList[puzzleIndex!].title
+        puzzleImage.image = puzzleList[puzzleIndex!].image
         
         if puzzleImage.image == UIImage(named: "crossword1") {
 
@@ -61,7 +59,7 @@ class ViewController: UIViewController {
 
         }
         
-        totalTries.text = "Total Tries: \(puzzleList[puzzleIndex].totalTries)"
+        totalTries.text = "Total Tries: \(puzzleList[puzzleIndex!].totalTries)"
         wordTries.text = ""
         wordSelected.text = ""
         wordBlanks.text = ""
@@ -69,19 +67,17 @@ class ViewController: UIViewController {
         clueButtons(isAcross: true)
         clueButtons(isAcross: false)
         
-        current = DispatchTime(uptimeNanoseconds: puzzleList[puzzleIndex].elapsedTime)
-        if puzzleList[puzzleIndex].status != "Completed" {
+        current = DispatchTime(uptimeNanoseconds: puzzleList[puzzleIndex!].elapsedTime)
+        if puzzleList[puzzleIndex!].status != "Completed" {
             timerOn = true
         }
-        nanoToSeconds(nanoTime: puzzleList[puzzleIndex].elapsedTime)
+        nanoToSeconds(nanoTime: puzzleList[puzzleIndex!].elapsedTime)
         oldTime = convertSeconds(seconds: seconds)
         runBackground()
     }
     
     override func  viewWillDisappear(_ animated: Bool) {
         timerOn = false
-        let otherVC = delegate as! UpdateTable
-        otherVC.reloadTable()
     }
     
     func runMain(seconds:Int, duration:UInt64) {
@@ -89,8 +85,8 @@ class ViewController: UIViewController {
                 self.time = self.convertSeconds(seconds:self.seconds)
                 let timeText = "\(self.time.0 + self.oldTime.0):\(self.time.1 + self.oldTime.1):\(self.time.2 + self.oldTime.2)"
                 self.durationLabel.text = "Elapsed Time: \(timeText)"
-                puzzleList[self.puzzleIndex].elapsedTime = duration
-                puzzleList[self.puzzleIndex].fancyTime = timeText
+                puzzleList[puzzleIndex!].elapsedTime = duration
+                puzzleList[puzzleIndex!].fancyTime = timeText
             }
     }
     
@@ -124,10 +120,10 @@ class ViewController: UIViewController {
         var puzzleDirectionList:Array<Word>
         if isAcross {
             directionList = [across5, across4, across3, across2, across1]
-            puzzleDirectionList = puzzleList[puzzleIndex].acrossList
+            puzzleDirectionList = puzzleList[puzzleIndex!].acrossList
         } else {
             directionList = [down5, down4, down3, down2, down1]
-            puzzleDirectionList = puzzleList[puzzleIndex].downList
+            puzzleDirectionList = puzzleList[puzzleIndex!].downList
         }
         
         let nonIncluded = (numButtons - 1) - puzzleDirectionList.count
@@ -154,7 +150,7 @@ class ViewController: UIViewController {
         
         var word = ""
         if clueType == "Across" {
-            for clue in puzzleList[puzzleIndex].acrossList {
+            for clue in puzzleList[puzzleIndex!].acrossList {
                 if button == clue.tag {
                     word = clue.name
                     wordTries.text = "Tries: " + String(clue.tries)
@@ -162,7 +158,7 @@ class ViewController: UIViewController {
                 }
             }
         } else if clueType == "Down" {
-            for clue in puzzleList[puzzleIndex].downList {
+            for clue in puzzleList[puzzleIndex!].downList {
                 if button == clue.tag {
                     word = clue.name
                     wordTries.text = "Tries: " + String(clue.tries)
@@ -191,8 +187,8 @@ class ViewController: UIViewController {
     }
     
     func incrementTries(correct:Bool) {
-        puzzleList[puzzleIndex].totalTries += 1
-        totalTries.text = "Total Tries: \(puzzleList[puzzleIndex].totalTries)"
+        puzzleList[puzzleIndex!].totalTries += 1
+        totalTries.text = "Total Tries: \(puzzleList[puzzleIndex!].totalTries)"
         
         currentWord?.tries += 1
         if correct {
