@@ -7,7 +7,6 @@
 
 import UIKit
 import FirebaseAuth
-// import Foundation
 
 class LoginViewController: UIViewController {
 
@@ -19,44 +18,20 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var segCtrl: UISegmentedControl!
     @IBOutlet weak var confirmLabel: UILabel!
     
-    let start = DispatchTime.now()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         pwField.isSecureTextEntry = true
         confirmLabel.text = ""
         confirmField.isHidden = true
+        emailField.text = emailSaved
         
         // TODO: add crossle logo
-        
-        Auth.auth().addStateDidChangeListener() {
-            auth, user in
-            if user != nil {
-                self.performSegue(withIdentifier: "LoginSegue", sender: nil)
-                self.emailField.text = nil
-                self.pwField.text = nil
-            }
-        }
             
     }
     
-    func convertSeconds(seconds:Int) {
-        print("\(String(seconds / 3600)):\(String((seconds % 3600)/60)):\(String((seconds % 3600) % 60))")
-    }
-    
-    @IBAction func time(_ sender: Any) {
-        let end = DispatchTime.now()
-
-        let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds // <<<<< Difference in nano seconds (UInt64)
-
-        let current = DispatchTime.init(uptimeNanoseconds: nanoTime)
-
-        let timeInterval = Double(nanoTime) / 1_000_000_000 // Technically could overflow for long running tests
-
-        let seconds = Int(round(timeInterval))
-        
-        convertSeconds(seconds:seconds)
+    override func viewWillAppear(_ animated: Bool) {
+        emailField.text = emailSaved
     }
     
     @IBAction func onSegmentChanged(_ sender: Any) {

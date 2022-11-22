@@ -112,21 +112,32 @@ class TableViewController: UITableViewController, UpdateTable {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath)
             let row = indexPath.row
-        cell.textLabel?.text = "\(puzzleList[row].title)\n   \(puzzleList[row].status)\n   Elapsed Time: \(puzzleList[row].fancyTime)\n   Total Tries: \(puzzleList[row].totalTries)"
+        cell.textLabel?.text = "\(puzzleList[row].title)\n   \(puzzleList[row].status)"
+        if showTime {
+            cell.textLabel?.text! += "\n   Elapsed Time: \(puzzleList[row].fancyTime)"
+        }
+        if showTries {
+            cell.textLabel?.text! += "\n   Total Tries: \(puzzleList[row].totalTries)"
+        }
             cell.textLabel?.numberOfLines = 4
             return cell
         }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             tableView.deselectRow(at: indexPath, animated: true)
+        // self.performSegue(withIdentifier: "TableToPuzzle", sender: AnyObject.self)
         }
     
-    // TODO: prevent segue if puzzle is locked
+    func segue(sender: AnyObject) {
+        
+    }
+    
+    // TODO: prevent segue if puzzle is locked - IF we decide to do it that way
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let backButton = UIBarButtonItem()
         backButton.title = "Puzzles"
         navigationItem.backBarButtonItem = backButton
-        
+
         if segue.identifier == "TableToPuzzle",
             let nextVC = segue.destination as? ViewController,
             let puzzleIndex = tableView.indexPathForSelectedRow?.row {
@@ -134,6 +145,25 @@ class TableViewController: UITableViewController, UpdateTable {
                 nextVC.puzzleIndex = puzzleIndex
             }
         }
+    
+//    override func shouldPerformSegue(withIdentifier identifier: String?, sender: Any?) -> Bool {
+//        let puzzleIndex = tableView.indexPathForSelectedRow?.row
+//        // let segue = UIStoryboardSegue.self
+//        let nextVC = Segue
+//        let nextVC = segue.destination as? ViewController
+//
+//        if identifier == "TableToPuzzle" {
+//            if puzzleList[puzzleIndex!].status != "Locked" {
+//                return true
+//            } else {
+//                print("alert")
+//                return false
+//            }
+//        } else {
+//            print("Incorrect identifier")
+//            return false
+//        }
+//    }
 
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

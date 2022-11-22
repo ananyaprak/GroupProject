@@ -14,6 +14,10 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        // TODO: set up main menu
+        // TODO: set up settings page
+        // TODO: set up instructions page
     }
     
     @IBAction func logoutPressed(_ sender: Any) {
@@ -24,6 +28,18 @@ class MainViewController: UIViewController {
             print("Signout Error")
         }
     }
+    
+    @IBAction func puzzlesPressed(_ sender: Any) {}
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let backButton = UIBarButtonItem()
+        backButton.title = "Main Menu"
+        navigationItem.backBarButtonItem = backButton
+    }
+    
+    @IBAction func settingsPressed(_ sender: Any) {}
+    
+    
     
     /*
     // MARK: - Navigation

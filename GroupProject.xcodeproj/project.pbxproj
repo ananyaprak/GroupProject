@@ -18,6 +18,7 @@
 		568310E5292AE7DF00487087 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 568310E4292AE7DF00487087 /* GoogleService-Info.plist */; };
 		568310E8292AE94B00487087 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 568310E7292AE94B00487087 /* FirebaseAuth */; };
 		568310EC292AEED400487087 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568310EB292AEED400487087 /* MainViewController.swift */; };
+		568310F0292C4EF600487087 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568310EF292C4EF600487087 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		5631A3A328EFC0B0008518B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		568310E4292AE7DF00487087 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		568310EB292AEED400487087 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		568310EF292C4EF600487087 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 				5631A39928EFC0AB008518B8 /* ViewController.swift */,
 				5631A39B28EFC0AB008518B8 /* Main.storyboard */,
 				568310EB292AEED400487087 /* MainViewController.swift */,
+				568310EF292C4EF600487087 /* SettingsViewController.swift */,
 				560CA3F0291A36F3003C79D8 /* LoginViewController.swift */,
 				560CA3F7291D8185003C79D8 /* TableViewController.swift */,
 				5631A39E28EFC0B0008518B8 /* Assets.xcassets */,
@@ -161,6 +164,7 @@
 			files = (
 				560CA3F1291A36F3003C79D8 /* LoginViewController.swift in Sources */,
 				5631A39A28EFC0AB008518B8 /* ViewController.swift in Sources */,
+				568310F0292C4EF600487087 /* SettingsViewController.swift in Sources */,
 				5631A39628EFC0AB008518B8 /* AppDelegate.swift in Sources */,
 				568310EC292AEED400487087 /* MainViewController.swift in Sources */,
 				560CA3F8291D8185003C79D8 /* TableViewController.swift in Sources */,
