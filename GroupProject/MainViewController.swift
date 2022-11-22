@@ -14,10 +14,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        // TODO: set up main menu
-        // TODO: set up settings page
-        // TODO: set up instructions page
+
     }
     
     @IBAction func logoutPressed(_ sender: Any) {

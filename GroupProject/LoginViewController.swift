@@ -27,6 +27,7 @@ class LoginViewController: UIViewController {
         emailField.text = emailSaved
         
         // TODO: add crossle logo
+        // TODO: make everything pretty, change defaults
             
     }
     

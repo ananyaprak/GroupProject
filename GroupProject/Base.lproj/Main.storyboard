@@ -566,10 +566,10 @@
             </objects>
             <point key="canvasLocation" x="2869.6261682242989" y="-47.300215982721383"/>
         </scene>
-        <!--View Controller-->
+        <!--Instructions View Controller-->
         <scene sceneID="qrK-OX-mhb">
             <objects>
-                <viewController id="RqV-r0-YdT" sceneMemberID="viewController">
+                <viewController id="RqV-r0-YdT" customClass="InstructionsViewController" customModule="GroupProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cmZ-Pf-gJ5">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -585,10 +585,11 @@
                         <viewLayoutGuide key="safeArea" id="LV3-8n-UeY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" id="wal-rk-Q1u"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eK4-X4-Cqg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="752.80373831775694" y="-723.75809935205189"/>
+            <point key="canvasLocation" x="1918" y="-746"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="Fpi-AD-DYu">
@@ -628,6 +629,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="How To Play"/>
+                                <connections>
+                                    <segue destination="RqV-r0-YdT" kind="show" id="gCg-Yt-jwB"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CmJ-9D-D0Z">
                                 <rect key="frame" x="197" y="613" width="78" height="31"/>
@@ -760,7 +764,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dXy-LQ-ctx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="752.80373831775694" y="625.26997840172794"/>
+            <point key="canvasLocation" x="1918" y="722"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="LnZ-F3-5eu">
