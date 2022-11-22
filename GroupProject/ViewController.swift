@@ -224,13 +224,6 @@ class ViewController: UIViewController {
             wordTries.text = "Choose a clue first"
         }
     }
-    
-    
-    
-    
-
-    // ananya test!
-    // zach test
 
 }
 
