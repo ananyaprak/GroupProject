@@ -136,8 +136,6 @@ class ViewController: UIViewController {
             } else {
                 let buttonNum = String(puzzleDirectionList[((numButtons - 1) - i)].clueNum)
                 directionList[i].setTitle(buttonNum, for: .normal)
-                print(buttonNum + direction)
-                print(puzzleList[puzzleIndex!].cluesCompleted)
                 if puzzleList[puzzleIndex!].cluesCompleted.contains(buttonNum + direction) {
                     directionList[i].tintColor = .gray
                 }
@@ -227,10 +225,8 @@ class ViewController: UIViewController {
             puzzleList[puzzleIndex!].changeStatus(value: 2)
             var msg = ""
             if puzzleIndex! == (puzzleList.count - 1) {
-                print(msg)
                 msg = "You've completed all available puzzles :o"
             } else {
-                print(msg)
                 puzzleList[puzzleIndex! + 1].changeStatus(value: 1)
                 msg = "You've unlocked the next puzzle :)"
             }
