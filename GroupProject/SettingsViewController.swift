@@ -61,11 +61,11 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     func setModeDescription() {
         if gameMode == "Noob" {
-            modeDescription.text = "Noob description - green, yellow, and red wordle clues on"
+            modeDescription.text = "Green, Yellow, and Red Wordle clues will show."
         } else if gameMode == "Gamer" {
-            modeDescription.text = "Gamer description - yellow and red wordle clues on"
+            modeDescription.text = "Yellow and Red World clues will show, Green will not."
         } else if gameMode == "Pro" {
-            modeDescription.text = "Pro description - no wordle clues on"
+            modeDescription.text = "No Worlde clues will show."
         }
     }
     
