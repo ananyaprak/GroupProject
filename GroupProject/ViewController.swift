@@ -7,6 +7,8 @@
 
 // TODO: add core data :(
 
+// TEST COMMENT
+
 import UIKit
 
 class ViewController: UIViewController {
