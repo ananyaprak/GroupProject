@@ -303,6 +303,22 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="current reds" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zyW-q0-rWF">
+                                <rect key="frame" x="148" y="734" width="133" height="158"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="current yellows" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kfr-Tg-M2d">
+                                <rect key="frame" x="148" y="641" width="133" height="81"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemYellowColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -314,6 +330,8 @@
                         <outlet property="across3" destination="xGm-75-WJu" id="gy0-Ng-Eh7"/>
                         <outlet property="across4" destination="EZQ-Q4-Bnu" id="85x-e5-BLZ"/>
                         <outlet property="across5" destination="uqx-14-70h" id="bOM-It-khx"/>
+                        <outlet property="currentReds" destination="zyW-q0-rWF" id="Fck-SV-27f"/>
+                        <outlet property="currentYellows" destination="kfr-Tg-M2d" id="Py8-Sn-TmM"/>
                         <outlet property="down1" destination="U2x-i4-x37" id="2bo-dl-0Od"/>
                         <outlet property="down2" destination="HaR-Q4-Ix2" id="7Ej-cj-0FC"/>
                         <outlet property="down3" destination="Gfe-99-eQt" id="JZv-QU-2CO"/>
@@ -557,6 +575,12 @@
         <image name="crossword1" width="764" height="1030"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

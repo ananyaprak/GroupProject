@@ -37,6 +37,9 @@ class ViewController: UIViewController {
     var currentButton:UIButton?
     var button:String = ""
     
+    @IBOutlet weak var currentYellows: UILabel!
+    @IBOutlet weak var currentReds: UILabel!
+    
     let queue = DispatchQueue(label: "queue")
     let mainQueue = DispatchQueue.main
     var timerOn = false
@@ -61,6 +64,8 @@ class ViewController: UIViewController {
         wordTries.text = ""
         wordSelected.text = ""
         wordBlanks.text = ""
+        currentYellows.text = ""
+        currentReds.text = ""
         
         clueButtons(isAcross: true)
         clueButtons(isAcross: false)
@@ -188,6 +193,17 @@ class ViewController: UIViewController {
             guessField.text = ""
             guessButton.isUserInteractionEnabled = true
         }
+        
+        if gameMode != "Pro" {
+            currentYellows.text = ""
+            for letter in currentWord!.yellowLetters {
+                currentYellows.text! += String(letter) + " "
+            }
+            currentReds.text = ""
+            for letter in currentWord!.redLetters {
+                currentReds.text! += String(letter) + " "
+            }
+        }
     }
     
     func updateBlanks(word:String) {
@@ -195,7 +211,7 @@ class ViewController: UIViewController {
         var wordSeparated = ""
         var currentLetter = 0
         for letter in wordComponents {
-            if currentWord?.wordLetters[currentLetter].known == true {
+            if currentWord?.wordLetters[currentLetter].known == true && gameMode == "Noob" {
                 wordSeparated += "\(letter) "
             } else {
                 wordSeparated += "_ "
@@ -226,6 +242,8 @@ class ViewController: UIViewController {
         wordTries.text = ""
         puzzleList[puzzleIndex!].cluesCompleted.append(button)
         button = ""
+        currentYellows.text = ""
+        currentReds.text = ""
         if puzzleList[puzzleIndex!].cluesCompleted.count == 6 {
             timerOn = false
             puzzleList[puzzleIndex!].changeStatus(value: 2)
@@ -254,7 +272,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func guessPressed(_ sender: Any) {
-        // TODO: add wordle clues
+        // TODO: add wordle clues for crossing letters that have been found
         if currentWord != nil {
             if guessField.text!.count == 0 {
                 wordTries.text = "Don't forget to guess!"
@@ -271,16 +289,19 @@ class ViewController: UIViewController {
                             currentWord!.wordLetters[guessedLetterInd].known = true
                         } else {
                             currentWord!.yellowLetters.append(guessedWord[guessedLetterInd])
+                            if gameMode != "Pro" {
+                                currentYellows.text! += String(guessedWord[guessedLetterInd]) + " "
+                            }
                         }
                         
                     } else if !currentWord!.redLetters.contains(guessedWord[guessedLetterInd]) && !currentWord!.yellowLetters.contains(guessedWord[guessedLetterInd]) {
                         currentWord!.redLetters.append(guessedWord[guessedLetterInd])
+                        if gameMode != "Pro" {
+                            currentReds.text! += String(guessedWord[guessedLetterInd]) + " "
+                        }
                     }
                     
                     updateBlanks(word:currentWord!.name)
-                    
-                    print(currentWord!.yellowLetters)
-                    print(currentWord!.redLetters)
                 }
             } else if guessField.text == currentWord?.name {
                 wordGuessed()
