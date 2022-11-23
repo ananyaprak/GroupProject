@@ -7,8 +7,6 @@
 
 // TODO: add core data :(
 
-// ananya test
-
 import UIKit
 
 class ViewController: UIViewController {
