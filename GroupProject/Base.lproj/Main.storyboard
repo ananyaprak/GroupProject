@@ -16,17 +16,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="KJu-ki-YTR">
-                                <rect key="frame" x="99" y="196" width="231" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="Login"/>
-                                    <segment title="Signup"/>
-                                </segments>
-                                <connections>
-                                    <action selector="onSegmentChanged:" destination="kdl-P7-2pL" eventType="valueChanged" id="pzP-Fz-o2J"/>
-                                </connections>
-                            </segmentedControl>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pYe-qJ-gDG">
                                 <rect key="frame" x="233" y="280" width="97" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -82,6 +71,21 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="applelogo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="K4C-sX-UgP">
+                                <rect key="frame" x="95" y="60" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="KJu-ki-YTR">
+                                <rect key="frame" x="99" y="216" width="231" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Login"/>
+                                    <segment title="Signup"/>
+                                </segments>
+                                <connections>
+                                    <action selector="onSegmentChanged:" destination="kdl-P7-2pL" eventType="valueChanged" id="pzP-Fz-o2J"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="tiZ-F3-8Ji"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -316,6 +320,7 @@
                         <outlet property="down4" destination="VMo-GO-hZC" id="U37-IO-RHq"/>
                         <outlet property="down5" destination="Vpr-uA-baH" id="Rom-mh-zXN"/>
                         <outlet property="durationLabel" destination="if4-ZO-JuV" id="zU2-IN-nXQ"/>
+                        <outlet property="guessButton" destination="UUY-3M-Jai" id="lqJ-K1-AmJ"/>
                         <outlet property="guessField" destination="adF-O3-OWP" id="IC0-Rk-fdg"/>
                         <outlet property="puzzleImage" destination="fxE-rr-VBh" id="gnb-WG-Kll"/>
                         <outlet property="totalTries" destination="vFe-vV-zZy" id="xyG-1e-WvK"/>
@@ -548,7 +553,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="crossword1" width="876" height="964"/>
+        <image name="applelogo" catalog="system" width="103" height="128"/>
+        <image name="crossword1" width="764" height="1030"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

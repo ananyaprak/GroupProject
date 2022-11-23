@@ -35,6 +35,7 @@ public class Puzzle {
     var totalTries:Int
     var elapsedTime:UInt64
     var fancyTime:String
+    var cluesCompleted:[String] = []
     
     var acrossList:[Word] = []
     var downList:[Word] = []
@@ -66,6 +67,10 @@ public class Puzzle {
         } else if value == 2 {
             self.status = "Completed"
         }
+    }
+    
+    func clueComplete(clue:String) {
+        cluesCompleted.append(clue)
     }
 }
 

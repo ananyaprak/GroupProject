@@ -18,6 +18,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var wordSelected: UILabel!
     @IBOutlet weak var wordBlanks: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
+    @IBOutlet weak var guessButton: UIButton!
+    
     
     let numButtons = 5
     @IBOutlet weak var across1: UIButton!
@@ -34,7 +36,7 @@ class ViewController: UIViewController {
     var currentWord:Word?
     @IBOutlet weak var guessField: UITextField!
     var currentButton:UIButton?
-    var cluesCompleted = [String]()
+    // var cluesCompleted = [String]()
     var button:String = ""
     
     let queue = DispatchQueue(label: "queue")
@@ -53,12 +55,6 @@ class ViewController: UIViewController {
         title = puzzleList[puzzleIndex!].title
         puzzleImage.image = puzzleList[puzzleIndex!].image
         
-        if puzzleImage.image == UIImage(named: "crossword1") {
-
-        } else if puzzleImage.image == UIImage(named: "crossword2") {
-
-        }
-        
         totalTries.text = "Total Tries: \(puzzleList[puzzleIndex!].totalTries)"
         wordTries.text = ""
         wordSelected.text = ""
@@ -70,10 +66,14 @@ class ViewController: UIViewController {
         current = DispatchTime(uptimeNanoseconds: puzzleList[puzzleIndex!].elapsedTime)
         if puzzleList[puzzleIndex!].status != "Completed" {
             timerOn = true
+            
+        } else {
+            durationLabel.text = "Elapsed Time: \(puzzleList[puzzleIndex!].fancyTime)"
         }
         nanoToSeconds(nanoTime: puzzleList[puzzleIndex!].elapsedTime)
         oldTime = convertSeconds(seconds: seconds)
         runBackground()
+        
     }
     
     override func  viewWillDisappear(_ animated: Bool) {
@@ -118,12 +118,15 @@ class ViewController: UIViewController {
     func clueButtons(isAcross:Bool) {
         var directionList:Array<UIButton>
         var puzzleDirectionList:Array<Word>
+        var direction:String
         if isAcross {
             directionList = [across5, across4, across3, across2, across1]
             puzzleDirectionList = puzzleList[puzzleIndex!].acrossList
+            direction = " Across"
         } else {
             directionList = [down5, down4, down3, down2, down1]
             puzzleDirectionList = puzzleList[puzzleIndex!].downList
+            direction = " Down"
         }
         
         let nonIncluded = (numButtons - 1) - puzzleDirectionList.count
@@ -131,7 +134,13 @@ class ViewController: UIViewController {
             if i <= nonIncluded {
                 directionList[i].isHidden = true
             } else {
-                directionList[i].setTitle(String(puzzleDirectionList[((numButtons - 1) - i)].clueNum), for: .normal)
+                let buttonNum = String(puzzleDirectionList[((numButtons - 1) - i)].clueNum)
+                directionList[i].setTitle(buttonNum, for: .normal)
+                print(buttonNum + direction)
+                print(puzzleList[puzzleIndex!].cluesCompleted)
+                if puzzleList[puzzleIndex!].cluesCompleted.contains(buttonNum + direction) {
+                    directionList[i].tintColor = .gray
+                }
             }
         }
     }
@@ -179,10 +188,14 @@ class ViewController: UIViewController {
         }
         wordBlanks.text = String(wordSeparated.dropLast())
         
-        if cluesCompleted.contains(button) {
+        if puzzleList[puzzleIndex!].cluesCompleted.contains(button) {
             guessField.isUserInteractionEnabled = false
+            guessField.text = word
+            guessButton.isUserInteractionEnabled = false
+            
         } else {
             guessField.isUserInteractionEnabled = true
+            guessButton.isUserInteractionEnabled = true
         }
     }
     
@@ -199,6 +212,39 @@ class ViewController: UIViewController {
         
     }
     
+    func wordGuessed() {
+        incrementTries(correct: true)
+        currentButton?.tintColor = .gray
+        guessField.text = ""
+        currentWord = nil
+        wordSelected.text = ""
+        wordBlanks.text = ""
+        wordTries.text = ""
+        puzzleList[puzzleIndex!].cluesCompleted.append(button)
+        button = ""
+        if puzzleList[puzzleIndex!].cluesCompleted.count == 6 {
+            timerOn = false
+            puzzleList[puzzleIndex!].changeStatus(value: 2)
+            var msg = ""
+            if puzzleIndex! == (puzzleList.count - 1) {
+                print(msg)
+                msg = "You've completed all available puzzles :o"
+            } else {
+                print(msg)
+                puzzleList[puzzleIndex! + 1].changeStatus(value: 1)
+                msg = "You've unlocked the next puzzle :)"
+            }
+            let controller = UIAlertController(
+                title: "Puzzle Completed!",
+                message: msg,
+                preferredStyle: .alert)
+            controller.addAction(UIAlertAction(
+                title: "woohoo",
+                style: .default))
+            present(controller, animated:true)
+        }
+    }
+    
     @IBAction func guessPressed(_ sender: Any) {
         // TODO: add wordle clues
         if currentWord != nil {
@@ -209,16 +255,7 @@ class ViewController: UIViewController {
             } else if guessField.text != currentWord?.name {
                 incrementTries(correct: false)
             } else if guessField.text == currentWord?.name {
-                incrementTries(correct: true)
-                currentButton?.tintColor = .gray
-                guessField.text = ""
-                currentWord = nil
-                wordSelected.text = ""
-                wordBlanks.text = ""
-                wordTries.text = ""
-                cluesCompleted.append(button)
-                button = ""
-
+                wordGuessed()
             }
         } else {
             wordTries.text = "Choose a clue first"
