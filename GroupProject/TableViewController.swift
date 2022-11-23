@@ -80,21 +80,50 @@ class TableViewController: UITableViewController {
         super.viewDidLoad()
         
         if puzzleList.isEmpty {
-            let newPuzzle = Puzzle(title: "UT Austin", image: "crossword1")
+            var newPuzzle = Puzzle(title: "UT Austin", image: "crossword1")
             puzzleList.append(newPuzzle)
             newPuzzle.changeStatus(value: 1)
-            // TODO: add more puzzles
             var newWord = Word(name: "bevo", clueNum: 3)
             newPuzzle.addAcross(word: newWord)
             newWord = Word(name: "longhorns", clueNum: 4)
             newPuzzle.addAcross(word: newWord)
-            newWord = Word(name: "speedway", clueNum: 6)
+            newWord = Word(name: "speedway", clueNum: 5)
             newPuzzle.addAcross(word: newWord)
-            newWord = Word(name: "tower", clueNum: 1)
+            newWord = Word(name: "teacher", clueNum: 1)
             newPuzzle.addDown(word: newWord)
             newWord = Word(name: "hornsup", clueNum: 2)
             newPuzzle.addDown(word: newWord)
-            newWord = Word(name: "jester", clueNum: 5)
+            newWord = Word(name: "exams", clueNum: 6)
+            newPuzzle.addDown(word: newWord)
+            
+            newPuzzle = Puzzle(title: "Winter", image: "crossword1")
+            puzzleList.append(newPuzzle)
+            newWord = Word(name: "snow", clueNum: 3)
+            newPuzzle.addAcross(word: newWord)
+            newWord = Word(name: "avalanche", clueNum: 4)
+            newPuzzle.addAcross(word: newWord)
+            newWord = Word(name: "presents", clueNum: 5)
+            newPuzzle.addAcross(word: newWord)
+            newWord = Word(name: "frozen", clueNum: 1)
+            newPuzzle.addDown(word: newWord)
+            newWord = Word(name: "sweater", clueNum: 2)
+            newPuzzle.addDown(word: newWord)
+            newWord = Word(name: "santa", clueNum: 6)
+            newPuzzle.addDown(word: newWord)
+            
+            newPuzzle = Puzzle(title: "Animals", image: "crossword1")
+            puzzleList.append(newPuzzle)
+            newWord = Word(name: "fish", clueNum: 3)
+            newPuzzle.addAcross(word: newWord)
+            newWord = Word(name: "deermouse", clueNum: 4)
+            newPuzzle.addAcross(word: newWord)
+            newWord = Word(name: "chipmunk", clueNum: 5)
+            newPuzzle.addAcross(word: newWord)
+            newWord = Word(name: "shihtzu", clueNum: 1)
+            newPuzzle.addDown(word: newWord)
+            newWord = Word(name: "cheetah", clueNum: 2)
+            newPuzzle.addDown(word: newWord)
+            newWord = Word(name: "panda", clueNum: 6)
             newPuzzle.addDown(word: newWord)
         }
         
@@ -131,7 +160,14 @@ class TableViewController: UITableViewController {
         if puzzleList[puzzleIndex!].status != "Locked" {
             self.performSegue(withIdentifier: "TableToPuzzle", sender: self)
         } else {
-            print("alert")
+            let controller = UIAlertController(
+                title: "Puzzle Locked!",
+                message: "This puzzle is current locked.",
+                preferredStyle: .alert)
+            controller.addAction(UIAlertAction(
+                title: "aw man",
+                style: .default))
+            present(controller, animated:true)
         }
     }
 }
