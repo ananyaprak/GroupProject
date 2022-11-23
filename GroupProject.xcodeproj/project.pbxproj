@@ -56,6 +56,7 @@
 		5631A38928EFC0AB008518B8 = {
 			isa = PBXGroup;
 			children = (
+				568310F5292ED81600487087 /* .gitignore */,
 				5631A39428EFC0AB008518B8 /* GroupProject */,
 				5631A39328EFC0AB008518B8 /* Products */,
 			);
@@ -76,7 +77,6 @@
 				5631A39728EFC0AB008518B8 /* SceneDelegate.swift */,
 				5631A39928EFC0AB008518B8 /* ViewController.swift */,
 				5631A39B28EFC0AB008518B8 /* Main.storyboard */,
-				568310F5292ED81600487087 /* .gitignore */,
 				568310EB292AEED400487087 /* MainViewController.swift */,
 				568310F3292C5E7F00487087 /* InstructionsViewController.swift */,
 				568310EF292C4EF600487087 /* SettingsViewController.swift */,
