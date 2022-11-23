@@ -7,22 +7,34 @@
 
 import UIKit
 
+public class Letter {
+    var letter:Character
+    var known:Bool
+    var index:Int
+    
+    init(letter:Character, index:Int) {
+        self.letter = letter
+        self.known = false
+        self.index = index
+    }
+}
+
 public class Word {
     var name:String
     var clueNum:Int
     var tag:String
     var tries:Int
-    var knownLetters:Array<Bool>
+    var wordLetters:Array<Letter>
     
     init(name:String, clueNum:Int) {
         self.name = name
         self.clueNum = clueNum
         self.tag = "tba"
         self.tries = 0
-        self.knownLetters = []
+        self.wordLetters = []
         let wordComponents = Array(name)
-        for _ in wordComponents {
-            self.knownLetters.append(false)
+        for letterInd in 0...(wordComponents.count-1) {
+            self.wordLetters.append(Letter(letter: wordComponents[letterInd], index:letterInd))
         }
     }
     

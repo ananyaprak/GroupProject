@@ -11,7 +11,6 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    // TODO: add crossword letter labels
     @IBOutlet weak var puzzleImage: UIImageView!
     @IBOutlet weak var totalTries: UILabel!
     @IBOutlet weak var wordTries: UILabel!
@@ -36,7 +35,6 @@ class ViewController: UIViewController {
     var currentWord:Word?
     @IBOutlet weak var guessField: UITextField!
     var currentButton:UIButton?
-    // var cluesCompleted = [String]()
     var button:String = ""
     
     let queue = DispatchQueue(label: "queue")
@@ -54,6 +52,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         title = puzzleList[puzzleIndex!].title
         puzzleImage.image = puzzleList[puzzleIndex!].image
+        
+        if puzzleImage.image == UIImage(named: "crossword1") {
+            // TODO: add crossword letter labels, connect to clues
+        }
         
         totalTries.text = "Total Tries: \(puzzleList[puzzleIndex!].totalTries)"
         wordTries.text = ""
@@ -177,7 +179,7 @@ class ViewController: UIViewController {
         var wordSeparated = ""
         var currentLetter = 0
         for letter in wordComponents {
-            if currentWord?.knownLetters[currentLetter] == true {
+            if currentWord?.wordLetters[currentLetter].known == true {
                 wordSeparated += "\(letter) "
             } else {
                 wordSeparated += "_ "
@@ -193,6 +195,7 @@ class ViewController: UIViewController {
             
         } else {
             guessField.isUserInteractionEnabled = true
+            guessField.text = ""
             guessButton.isUserInteractionEnabled = true
         }
     }
