@@ -90,7 +90,27 @@ class ViewController: UIViewController {
     func runMain(seconds:Int, duration:UInt64) {
             mainQueue.async {
                 self.time = self.convertSeconds(seconds:self.seconds)
-                let timeText = "\(self.time.0 + self.oldTime.0):\(self.time.1 + self.oldTime.1):\(self.time.2 + self.oldTime.2)"
+                
+                var time0 = ""
+                var time1 = ""
+                var time2 = ""
+                if self.time.0 + self.oldTime.0 < 10 {
+                    time0 = String(0) + String(self.time.0 + self.oldTime.0)
+                } else {
+                    time0 = String(self.time.0 + self.oldTime.0)
+                }
+                if self.time.1 + self.oldTime.1 < 10 {
+                    time1 = String(0) + String(self.time.1 + self.oldTime.1)
+                } else {
+                    time1 = String(self.time.1 + self.oldTime.1)
+                }
+                if self.time.2 + self.oldTime.2 < 10 {
+                    time2 = String(0) + String(self.time.2 + self.oldTime.2)
+                } else {
+                    time2 = String(self.time.2 + self.oldTime.2)
+                }
+                
+                let timeText = "\(time0):\(time1):\(time2)"
                 self.durationLabel.text = "Elapsed Time: \(timeText)"
                 puzzleList[puzzleIndex!].elapsedTime = duration
                 puzzleList[puzzleIndex!].fancyTime = timeText

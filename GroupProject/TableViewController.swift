@@ -62,7 +62,7 @@ public class Puzzle {
         self.image = UIImage(named: image)!
         self.totalTries = 0
         self.elapsedTime = 0
-        self.fancyTime = "0:0:0"
+        self.fancyTime = "00:00:00"
     }
     
     func addAcross(word:Word) {
