@@ -44,7 +44,7 @@ class LoginViewController: UIViewController {
         case 1:
             logsignButton.setTitle("Sign Up", for: .normal)
             confirmLabel.text = "Confirm Password"
-            confirmField.isHidden = true
+            confirmField.isHidden = false
         default:
             logsignButton.setTitle("Error", for: .normal)
         }
