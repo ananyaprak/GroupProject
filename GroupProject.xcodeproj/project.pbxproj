@@ -19,6 +19,7 @@
 		568310EC292AEED400487087 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568310EB292AEED400487087 /* MainViewController.swift */; };
 		568310F0292C4EF600487087 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568310EF292C4EF600487087 /* SettingsViewController.swift */; };
 		568310F4292C5E7F00487087 /* InstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568310F3292C5E7F00487087 /* InstructionsViewController.swift */; };
+		568310F6292ED81600487087 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 568310F5292ED81600487087 /* .gitignore */; };
 		F9D91CCE292DA66A0093E347 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9D91CCD292DA66A0093E347 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +37,7 @@
 		568310EB292AEED400487087 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		568310EF292C4EF600487087 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		568310F3292C5E7F00487087 /* InstructionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsViewController.swift; sourceTree = "<group>"; };
+		568310F5292ED81600487087 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		F9D91CCD292DA66A0093E347 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -74,6 +76,7 @@
 				5631A39728EFC0AB008518B8 /* SceneDelegate.swift */,
 				5631A39928EFC0AB008518B8 /* ViewController.swift */,
 				5631A39B28EFC0AB008518B8 /* Main.storyboard */,
+				568310F5292ED81600487087 /* .gitignore */,
 				568310EB292AEED400487087 /* MainViewController.swift */,
 				568310F3292C5E7F00487087 /* InstructionsViewController.swift */,
 				568310EF292C4EF600487087 /* SettingsViewController.swift */,
@@ -151,6 +154,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				568310F6292ED81600487087 /* .gitignore in Resources */,
 				5631A3A228EFC0B0008518B8 /* LaunchScreen.storyboard in Resources */,
 				F9D91CCE292DA66A0093E347 /* GoogleService-Info.plist in Resources */,
 				5631A39F28EFC0B0008518B8 /* Assets.xcassets in Resources */,
