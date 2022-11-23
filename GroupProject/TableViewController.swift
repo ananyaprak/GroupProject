@@ -25,6 +25,8 @@ public class Word {
     var tag:String
     var tries:Int
     var wordLetters:Array<Letter>
+    var yellowLetters:Array<Character>
+    var redLetters:Array<Character>
     
     init(name:String, clueNum:Int) {
         self.name = name
@@ -32,6 +34,8 @@ public class Word {
         self.tag = "tba"
         self.tries = 0
         self.wordLetters = []
+        self.yellowLetters = []
+        self.redLetters = []
         let wordComponents = Array(name)
         for letterInd in 0...(wordComponents.count-1) {
             self.wordLetters.append(Letter(letter: wordComponents[letterInd], index:letterInd))
