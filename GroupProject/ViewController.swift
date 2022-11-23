@@ -11,13 +11,14 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    // TODO: add crossword letter labels
     @IBOutlet weak var puzzleImage: UIImageView!
     @IBOutlet weak var totalTries: UILabel!
     @IBOutlet weak var wordTries: UILabel!
     @IBOutlet weak var wordSelected: UILabel!
     @IBOutlet weak var wordBlanks: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
+    @IBOutlet weak var guessButton: UIButton!
+    
     
     let numButtons = 5
     @IBOutlet weak var across1: UIButton!
@@ -34,7 +35,6 @@ class ViewController: UIViewController {
     var currentWord:Word?
     @IBOutlet weak var guessField: UITextField!
     var currentButton:UIButton?
-    var cluesCompleted = [String]()
     var button:String = ""
     
     let queue = DispatchQueue(label: "queue")
@@ -54,9 +54,7 @@ class ViewController: UIViewController {
         puzzleImage.image = puzzleList[puzzleIndex!].image
         
         if puzzleImage.image == UIImage(named: "crossword1") {
-
-        } else if puzzleImage.image == UIImage(named: "crossword2") {
-
+            // TODO: add crossword letter labels, connect to clues
         }
         
         totalTries.text = "Total Tries: \(puzzleList[puzzleIndex!].totalTries)"
@@ -70,10 +68,14 @@ class ViewController: UIViewController {
         current = DispatchTime(uptimeNanoseconds: puzzleList[puzzleIndex!].elapsedTime)
         if puzzleList[puzzleIndex!].status != "Completed" {
             timerOn = true
+            
+        } else {
+            durationLabel.text = "Elapsed Time: \(puzzleList[puzzleIndex!].fancyTime)"
         }
         nanoToSeconds(nanoTime: puzzleList[puzzleIndex!].elapsedTime)
         oldTime = convertSeconds(seconds: seconds)
         runBackground()
+        
     }
     
     override func  viewWillDisappear(_ animated: Bool) {
@@ -118,12 +120,15 @@ class ViewController: UIViewController {
     func clueButtons(isAcross:Bool) {
         var directionList:Array<UIButton>
         var puzzleDirectionList:Array<Word>
+        var direction:String
         if isAcross {
             directionList = [across5, across4, across3, across2, across1]
             puzzleDirectionList = puzzleList[puzzleIndex!].acrossList
+            direction = " Across"
         } else {
             directionList = [down5, down4, down3, down2, down1]
             puzzleDirectionList = puzzleList[puzzleIndex!].downList
+            direction = " Down"
         }
         
         let nonIncluded = (numButtons - 1) - puzzleDirectionList.count
@@ -131,7 +136,11 @@ class ViewController: UIViewController {
             if i <= nonIncluded {
                 directionList[i].isHidden = true
             } else {
-                directionList[i].setTitle(String(puzzleDirectionList[((numButtons - 1) - i)].clueNum), for: .normal)
+                let buttonNum = String(puzzleDirectionList[((numButtons - 1) - i)].clueNum)
+                directionList[i].setTitle(buttonNum, for: .normal)
+                if puzzleList[puzzleIndex!].cluesCompleted.contains(buttonNum + direction) {
+                    directionList[i].tintColor = .gray
+                }
             }
         }
     }
@@ -166,11 +175,27 @@ class ViewController: UIViewController {
                 }
             }
         }
+        
+        updateBlanks(word:word)
+        
+        if puzzleList[puzzleIndex!].cluesCompleted.contains(button) {
+            guessField.isUserInteractionEnabled = false
+            guessField.text = word
+            guessButton.isUserInteractionEnabled = false
+            
+        } else {
+            guessField.isUserInteractionEnabled = true
+            guessField.text = ""
+            guessButton.isUserInteractionEnabled = true
+        }
+    }
+    
+    func updateBlanks(word:String) {
         let wordComponents = Array(word)
         var wordSeparated = ""
         var currentLetter = 0
         for letter in wordComponents {
-            if currentWord?.knownLetters[currentLetter] == true {
+            if currentWord?.wordLetters[currentLetter].known == true {
                 wordSeparated += "\(letter) "
             } else {
                 wordSeparated += "_ "
@@ -178,12 +203,6 @@ class ViewController: UIViewController {
             currentLetter += 1
         }
         wordBlanks.text = String(wordSeparated.dropLast())
-        
-        if cluesCompleted.contains(button) {
-            guessField.isUserInteractionEnabled = false
-        } else {
-            guessField.isUserInteractionEnabled = true
-        }
     }
     
     func incrementTries(correct:Bool) {
@@ -199,6 +218,41 @@ class ViewController: UIViewController {
         
     }
     
+    func wordGuessed() {
+        incrementTries(correct: true)
+        currentButton?.tintColor = .gray
+        guessField.text = ""
+        wordSelected.text = ""
+        wordTries.text = ""
+        puzzleList[puzzleIndex!].cluesCompleted.append(button)
+        button = ""
+        if puzzleList[puzzleIndex!].cluesCompleted.count == 6 {
+            timerOn = false
+            puzzleList[puzzleIndex!].changeStatus(value: 2)
+            var msg = ""
+            if puzzleIndex! == (puzzleList.count - 1) {
+                msg = "You've completed all available puzzles :o"
+            } else {
+                puzzleList[puzzleIndex! + 1].changeStatus(value: 1)
+                msg = "You've unlocked the next puzzle :)"
+            }
+            let controller = UIAlertController(
+                title: "Puzzle Completed!",
+                message: msg,
+                preferredStyle: .alert)
+            controller.addAction(UIAlertAction(
+                title: "woohoo",
+                style: .default))
+            present(controller, animated:true)
+        }
+        for letter in currentWord!.wordLetters {
+            letter.known = true
+        }
+        updateBlanks(word: currentWord!.name)
+        wordBlanks.text = ""
+        currentWord = nil
+    }
+    
     @IBAction func guessPressed(_ sender: Any) {
         // TODO: add wordle clues
         if currentWord != nil {
@@ -206,19 +260,30 @@ class ViewController: UIViewController {
                 wordTries.text = "Don't forget to guess!"
             } else if guessField.text!.count != currentWord!.name.count {
                 wordTries.text = "Invalid - check number of letters"
-            } else if guessField.text != currentWord?.name {
+            } else if guessField.text != currentWord!.name {
                 incrementTries(correct: false)
+                let guessedWord = Array(guessField.text!)
+                let clueLetters = Array(currentWord!.name)
+                for guessedLetterInd in 0...(guessedWord.count-1) {
+                    if clueLetters.contains(guessedWord[guessedLetterInd]) && !currentWord!.yellowLetters.contains(guessedWord[guessedLetterInd]) {
+                        
+                        if clueLetters[guessedLetterInd] == guessedWord[guessedLetterInd] {
+                            currentWord!.wordLetters[guessedLetterInd].known = true
+                        } else {
+                            currentWord!.yellowLetters.append(guessedWord[guessedLetterInd])
+                        }
+                        
+                    } else if !currentWord!.redLetters.contains(guessedWord[guessedLetterInd]) && !currentWord!.yellowLetters.contains(guessedWord[guessedLetterInd]) {
+                        currentWord!.redLetters.append(guessedWord[guessedLetterInd])
+                    }
+                    
+                    updateBlanks(word:currentWord!.name)
+                    
+                    print(currentWord!.yellowLetters)
+                    print(currentWord!.redLetters)
+                }
             } else if guessField.text == currentWord?.name {
-                incrementTries(correct: true)
-                currentButton?.tintColor = .gray
-                guessField.text = ""
-                currentWord = nil
-                wordSelected.text = ""
-                wordBlanks.text = ""
-                wordTries.text = ""
-                cluesCompleted.append(button)
-                button = ""
-
+                wordGuessed()
             }
         } else {
             wordTries.text = "Choose a clue first"

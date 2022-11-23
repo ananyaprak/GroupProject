@@ -7,22 +7,38 @@
 
 import UIKit
 
+public class Letter {
+    var letter:Character
+    var known:Bool
+    var index:Int
+    
+    init(letter:Character, index:Int) {
+        self.letter = letter
+        self.known = false
+        self.index = index
+    }
+}
+
 public class Word {
     var name:String
     var clueNum:Int
     var tag:String
     var tries:Int
-    var knownLetters:Array<Bool>
+    var wordLetters:Array<Letter>
+    var yellowLetters:Array<Character>
+    var redLetters:Array<Character>
     
     init(name:String, clueNum:Int) {
         self.name = name
         self.clueNum = clueNum
         self.tag = "tba"
         self.tries = 0
-        self.knownLetters = []
+        self.wordLetters = []
+        self.yellowLetters = []
+        self.redLetters = []
         let wordComponents = Array(name)
-        for _ in wordComponents {
-            self.knownLetters.append(false)
+        for letterInd in 0...(wordComponents.count-1) {
+            self.wordLetters.append(Letter(letter: wordComponents[letterInd], index:letterInd))
         }
     }
     
@@ -35,6 +51,7 @@ public class Puzzle {
     var totalTries:Int
     var elapsedTime:UInt64
     var fancyTime:String
+    var cluesCompleted:[String] = []
     
     var acrossList:[Word] = []
     var downList:[Word] = []
@@ -66,6 +83,10 @@ public class Puzzle {
         } else if value == 2 {
             self.status = "Completed"
         }
+    }
+    
+    func clueComplete(clue:String) {
+        cluesCompleted.append(clue)
     }
 }
 
