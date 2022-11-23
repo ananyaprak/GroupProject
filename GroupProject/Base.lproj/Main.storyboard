@@ -300,6 +300,22 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="current red" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tIt-UI-Mwj">
+                                <rect key="frame" x="148" y="738" width="144" height="154"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="current yellow" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xu7-Xc-IaK">
+                                <rect key="frame" x="148" y="632" width="144" height="90"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemYellowColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -311,12 +327,15 @@
                         <outlet property="across3" destination="xGm-75-WJu" id="gy0-Ng-Eh7"/>
                         <outlet property="across4" destination="EZQ-Q4-Bnu" id="85x-e5-BLZ"/>
                         <outlet property="across5" destination="uqx-14-70h" id="bOM-It-khx"/>
+                        <outlet property="currentReds" destination="tIt-UI-Mwj" id="E5Z-5t-RFL"/>
+                        <outlet property="currentYellows" destination="Xu7-Xc-IaK" id="VFr-tF-gOg"/>
                         <outlet property="down1" destination="U2x-i4-x37" id="2bo-dl-0Od"/>
                         <outlet property="down2" destination="HaR-Q4-Ix2" id="7Ej-cj-0FC"/>
                         <outlet property="down3" destination="Gfe-99-eQt" id="JZv-QU-2CO"/>
                         <outlet property="down4" destination="VMo-GO-hZC" id="U37-IO-RHq"/>
                         <outlet property="down5" destination="Vpr-uA-baH" id="Rom-mh-zXN"/>
                         <outlet property="durationLabel" destination="if4-ZO-JuV" id="zU2-IN-nXQ"/>
+                        <outlet property="guessButton" destination="UUY-3M-Jai" id="UZZ-FL-Ae8"/>
                         <outlet property="guessField" destination="adF-O3-OWP" id="IC0-Rk-fdg"/>
                         <outlet property="puzzleImage" destination="fxE-rr-VBh" id="gnb-WG-Kll"/>
                         <outlet property="totalTries" destination="vFe-vV-zZy" id="xyG-1e-WvK"/>
@@ -646,6 +665,12 @@
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
