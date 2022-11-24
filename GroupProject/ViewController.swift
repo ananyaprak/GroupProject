@@ -259,7 +259,7 @@ class ViewController: UIViewController {
         currentButton?.tintColor = .gray
         guessField.text = ""
         wordSelected.text = ""
-        wordTries.text = ""
+        wordTries.text = "Correct!"
         puzzleList[puzzleIndex!].cluesCompleted.append(button)
         button = ""
         currentYellows.text = ""

@@ -127,7 +127,6 @@ class TableViewController: UITableViewController {
         
         if puzzleList.isEmpty {
             let image = "crossword1"
-            // TODO: load in updated pic
             
             createPuzzle(name: "UT Austin", status: "Unlocked", image: image, acrossWords: ["bevo","longhorns","speedway"],  downWords: ["jester","hornsup","exams"])
             
