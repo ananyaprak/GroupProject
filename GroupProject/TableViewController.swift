@@ -12,6 +12,7 @@ public class Letter {
     var known:Bool
     var index:Int
     var crossingLetter:Letter? = nil
+    var cwBox:UILabel? = nil
     
     init(letter:Character, index:Int) {
         self.letter = letter
@@ -21,6 +22,10 @@ public class Letter {
     
     func assignCrossing(letter:Letter) {
         self.crossingLetter = letter
+    }
+    
+    func assignBox(box:UILabel) {
+        self.cwBox = box
     }
 }
 

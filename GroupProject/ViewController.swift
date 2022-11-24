@@ -32,6 +32,41 @@ class ViewController: UIViewController {
     @IBOutlet weak var down4: UIButton!
     @IBOutlet weak var down5: UIButton!
     
+    @IBOutlet weak var cwLabel0: UILabel!
+    @IBOutlet weak var cwLabel1: UILabel!
+    @IBOutlet weak var cwLabel2: UILabel!
+    @IBOutlet weak var cwLabel3: UILabel!
+    @IBOutlet weak var cwLabel4: UILabel!
+    @IBOutlet weak var cwLabel5: UILabel!
+    @IBOutlet weak var cwLabel6: UILabel!
+    @IBOutlet weak var cwLabel7: UILabel!
+    @IBOutlet weak var cwLabel8: UILabel!
+    @IBOutlet weak var cwLabel9: UILabel!
+    @IBOutlet weak var cwLabel10: UILabel!
+    @IBOutlet weak var cwLabel11: UILabel!
+    @IBOutlet weak var cwLabel12: UILabel!
+    @IBOutlet weak var cwLabel13: UILabel!
+    @IBOutlet weak var cwLabel14: UILabel!
+    @IBOutlet weak var cwLabel15: UILabel!
+    @IBOutlet weak var cwLabel16: UILabel!
+    @IBOutlet weak var cwLabel17: UILabel!
+    @IBOutlet weak var cwLabel18: UILabel!
+    @IBOutlet weak var cwLabel19: UILabel!
+    @IBOutlet weak var cwLabel20: UILabel!
+    @IBOutlet weak var cwLabel21: UILabel!
+    @IBOutlet weak var cwLabel22: UILabel!
+    @IBOutlet weak var cwLabel23: UILabel!
+    @IBOutlet weak var cwLabel24: UILabel!
+    @IBOutlet weak var cwLabel25: UILabel!
+    @IBOutlet weak var cwLabel26: UILabel!
+    @IBOutlet weak var cwLabel27: UILabel!
+    @IBOutlet weak var cwLabel28: UILabel!
+    @IBOutlet weak var cwLabel29: UILabel!
+    @IBOutlet weak var cwLabel30: UILabel!
+    @IBOutlet weak var cwLabel31: UILabel!
+    @IBOutlet weak var cwLabel32: UILabel!
+    @IBOutlet weak var cwLabel33: UILabel!
+    
     var currentWord:Word?
     @IBOutlet weak var guessField: UITextField!
     var currentButton:UIButton?
@@ -56,8 +91,75 @@ class ViewController: UIViewController {
         title = puzzleList[puzzleIndex!].title
         puzzleImage.image = puzzleList[puzzleIndex!].image
         
+        let _ = [cwLabel0, cwLabel1, cwLabel2, cwLabel3, cwLabel4, cwLabel5, cwLabel6, cwLabel7, cwLabel8, cwLabel9, cwLabel10, cwLabel11, cwLabel12, cwLabel13, cwLabel14, cwLabel15, cwLabel16, cwLabel17, cwLabel18, cwLabel19, cwLabel20, cwLabel21, cwLabel22, cwLabel23, cwLabel24, cwLabel25, cwLabel26, cwLabel27, cwLabel28, cwLabel29, cwLabel30, cwLabel31, cwLabel32, cwLabel33]
         if puzzleImage.image == UIImage(named: "crossword1") {
-            // TODO: add crossword letter labels, connect to clues
+            for word in puzzleList[puzzleIndex!].acrossList {
+                if word.clueNum == 3 {
+                    word.wordLetters[0].assignBox(box: cwLabel4)
+                    word.wordLetters[1].assignBox(box: cwLabel5)
+                    word.wordLetters[2].assignBox(box: cwLabel6)
+                    word.wordLetters[3].assignBox(box: cwLabel7)
+                } else if word.clueNum == 4 {
+                    word.wordLetters[0].assignBox(box: cwLabel11)
+                    word.wordLetters[1].assignBox(box: cwLabel12)
+                    word.wordLetters[2].assignBox(box: cwLabel13)
+                    word.wordLetters[3].assignBox(box: cwLabel14)
+                    word.wordLetters[4].assignBox(box: cwLabel15)
+                    word.wordLetters[5].assignBox(box: cwLabel16)
+                    word.wordLetters[6].assignBox(box: cwLabel17)
+                    word.wordLetters[7].assignBox(box: cwLabel18)
+                    word.wordLetters[8].assignBox(box: cwLabel19)
+                } else if word.clueNum == 5 {
+                    word.wordLetters[0].assignBox(box: cwLabel22)
+                    word.wordLetters[1].assignBox(box: cwLabel23)
+                    word.wordLetters[2].assignBox(box: cwLabel24)
+                    word.wordLetters[3].assignBox(box: cwLabel25)
+                    word.wordLetters[4].assignBox(box: cwLabel26)
+                    word.wordLetters[5].assignBox(box: cwLabel27)
+                    word.wordLetters[6].assignBox(box: cwLabel28)
+                    word.wordLetters[7].assignBox(box: cwLabel29)
+                }
+                
+                for letter in word.wordLetters {
+                    if letter.known {
+                        letter.cwBox!.text = String(letter.letter)
+                    } else {
+                        letter.cwBox!.text = ""
+                    }
+                }
+            }
+            for word in puzzleList[puzzleIndex!].downList {
+                if word.clueNum == 1 {
+                    word.wordLetters[0].assignBox(box: cwLabel0)
+                    word.wordLetters[1].assignBox(box: cwLabel1)
+                    word.wordLetters[2].assignBox(box: cwLabel3)
+                    word.wordLetters[3].assignBox(box: cwLabel8)
+                    word.wordLetters[4].assignBox(box: cwLabel10)
+                    word.wordLetters[5].assignBox(box: cwLabel17)
+                } else if word.clueNum == 2 {
+                    word.wordLetters[0].assignBox(box: cwLabel2)
+                    word.wordLetters[1].assignBox(box: cwLabel7)
+                    word.wordLetters[2].assignBox(box: cwLabel9)
+                    word.wordLetters[3].assignBox(box: cwLabel13)
+                    word.wordLetters[4].assignBox(box: cwLabel20)
+                    word.wordLetters[5].assignBox(box: cwLabel21)
+                    word.wordLetters[6].assignBox(box: cwLabel23)
+                } else if word.clueNum == 6 {
+                    word.wordLetters[0].assignBox(box: cwLabel25)
+                    word.wordLetters[1].assignBox(box: cwLabel30)
+                    word.wordLetters[2].assignBox(box: cwLabel31)
+                    word.wordLetters[3].assignBox(box: cwLabel32)
+                    word.wordLetters[4].assignBox(box: cwLabel33)
+                }
+                
+                for letter in word.wordLetters {
+                    if letter.known {
+                        letter.cwBox!.text = String(letter.letter)
+                    } else {
+                        letter.cwBox!.text = ""
+                    }
+                }
+            }
         }
         
         totalTries.text = "Total Tries: \(puzzleList[puzzleIndex!].totalTries)"
@@ -285,8 +387,10 @@ class ViewController: UIViewController {
         }
         for letter in currentWord!.wordLetters {
             letter.known = true
+            letter.cwBox!.text = String(letter.letter)
             if letter.crossingLetter != nil {
                 letter.crossingLetter?.known = true
+                letter.crossingLetter?.cwBox!.text = String(letter.letter)
             }
         }
         updateBlanks(word: currentWord!.name)
@@ -309,8 +413,10 @@ class ViewController: UIViewController {
                         
                         if clueLetters[guessedLetterInd] == guessedWord[guessedLetterInd] {
                             currentWord!.wordLetters[guessedLetterInd].known = true
+                            currentWord!.wordLetters[guessedLetterInd].cwBox!.text = String(currentWord!.wordLetters[guessedLetterInd].letter)
                             if currentWord!.wordLetters[guessedLetterInd].crossingLetter != nil {
                                 currentWord!.wordLetters[guessedLetterInd].crossingLetter?.known = true
+                                currentWord!.wordLetters[guessedLetterInd].crossingLetter?.cwBox!.text = String(currentWord!.wordLetters[guessedLetterInd].letter)
                             }
                         } else {
                             currentWord!.yellowLetters.append(guessedWord[guessedLetterInd])
