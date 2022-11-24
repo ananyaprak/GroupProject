@@ -11,11 +11,16 @@ public class Letter {
     var letter:Character
     var known:Bool
     var index:Int
+    var crossingLetter:Letter? = nil
     
     init(letter:Character, index:Int) {
         self.letter = letter
         self.known = false
         self.index = index
+    }
+    
+    func assignCrossing(letter:Letter) {
+        self.crossingLetter = letter
     }
 }
 
@@ -88,6 +93,26 @@ public class Puzzle {
     func clueComplete(clue:String) {
         cluesCompleted.append(clue)
     }
+    
+    func assignCrossing(word1:String, letter1:Int, word2:String, letter2:Int) {
+        var acrossWord:Word?
+        var downWord:Word?
+        for word in acrossList {
+            if word.name == word1 {
+                acrossWord = word
+            }
+        }
+        for word in downList {
+            if word.name == word2 {
+                downWord = word
+            }
+        }
+        let acrossLetter = acrossWord?.wordLetters[letter1]
+        let downLetter = downWord?.wordLetters[letter2]
+        acrossLetter?.assignCrossing(letter: downLetter!)
+        downLetter?.assignCrossing(letter: acrossLetter!)
+    }
+
 }
 
 public var puzzleList:[Puzzle] = []
@@ -101,55 +126,45 @@ class TableViewController: UITableViewController {
         super.viewDidLoad()
         
         if puzzleList.isEmpty {
-            var newPuzzle = Puzzle(title: "UT Austin", image: "crossword1")
-            puzzleList.append(newPuzzle)
-            newPuzzle.changeStatus(value: 1)
-            var newWord = Word(name: "bevo", clueNum: 3)
-            newPuzzle.addAcross(word: newWord)
-            newWord = Word(name: "longhorns", clueNum: 4)
-            newPuzzle.addAcross(word: newWord)
-            newWord = Word(name: "speedway", clueNum: 5)
-            newPuzzle.addAcross(word: newWord)
-            newWord = Word(name: "teacher", clueNum: 1)
-            newPuzzle.addDown(word: newWord)
-            newWord = Word(name: "hornsup", clueNum: 2)
-            newPuzzle.addDown(word: newWord)
-            newWord = Word(name: "exams", clueNum: 6)
-            newPuzzle.addDown(word: newWord)
+            let image = "crossword1"
+            // TODO: load in updated pic
             
-            newPuzzle = Puzzle(title: "Winter", image: "crossword1")
-            puzzleList.append(newPuzzle)
-            newWord = Word(name: "snow", clueNum: 3)
-            newPuzzle.addAcross(word: newWord)
-            newWord = Word(name: "avalanche", clueNum: 4)
-            newPuzzle.addAcross(word: newWord)
-            newWord = Word(name: "presents", clueNum: 5)
-            newPuzzle.addAcross(word: newWord)
-            newWord = Word(name: "frozen", clueNum: 1)
-            newPuzzle.addDown(word: newWord)
-            newWord = Word(name: "sweater", clueNum: 2)
-            newPuzzle.addDown(word: newWord)
-            newWord = Word(name: "santa", clueNum: 6)
-            newPuzzle.addDown(word: newWord)
+            createPuzzle(name: "UT Austin", status: "Unlocked", image: image, acrossWords: ["bevo","longhorns","speedway"],  downWords: ["jester","hornsup","exams"])
             
-            newPuzzle = Puzzle(title: "Animals", image: "crossword1")
-            puzzleList.append(newPuzzle)
-            newWord = Word(name: "fish", clueNum: 3)
-            newPuzzle.addAcross(word: newWord)
-            newWord = Word(name: "deermouse", clueNum: 4)
-            newPuzzle.addAcross(word: newWord)
-            newWord = Word(name: "chipmunk", clueNum: 5)
-            newPuzzle.addAcross(word: newWord)
-            newWord = Word(name: "shihtzu", clueNum: 1)
-            newPuzzle.addDown(word: newWord)
-            newWord = Word(name: "cheetah", clueNum: 2)
-            newPuzzle.addDown(word: newWord)
-            newWord = Word(name: "panda", clueNum: 6)
-            newPuzzle.addDown(word: newWord)
+            createPuzzle(name: "Winter", image: image, acrossWords: ["snow","avalanche","presents"], downWords: ["arctic","sweater","santa"])
+
+            createPuzzle(name: "Animals", image: image, acrossWords: ["fish","steerling","chipmunk"], downWords: ["agouti","cheetah","panda"])
         }
         
         tableView.reloadData()
 
+    }
+    
+    func createPuzzle(name:String, status:String = "Locked", image:String, acrossWords:Array<String>, downWords:Array<String>) {
+        var acrossNums = [Int]()
+        var downNums = [Int]()
+        if image == "crossword1" {
+            acrossNums = [3,4,5]
+            downNums = [1,2,6]
+        }
+        
+        let newPuzzle = Puzzle(title: name, status: status, image: image)
+        puzzleList.append(newPuzzle)
+        
+        for wordInd in 0...(acrossWords.count-1) {
+            let newWord = Word(name: acrossWords[wordInd], clueNum: acrossNums[wordInd])
+            newPuzzle.addAcross(word: newWord)
+        }
+        for wordInd in 0...(downWords.count-1) {
+            let newWord = Word(name: downWords[wordInd], clueNum: downNums[wordInd])
+            newPuzzle.addDown(word: newWord)
+        }
+        
+        newPuzzle.assignCrossing(word1: acrossWords[0], letter1: 3, word2: downWords[1], letter2: 1)
+        newPuzzle.assignCrossing(word1: acrossWords[1], letter1: 2, word2: downWords[1], letter2: 3)
+        newPuzzle.assignCrossing(word1: acrossWords[1], letter1: 6, word2: downWords[0], letter2: 5)
+        newPuzzle.assignCrossing(word1: acrossWords[2], letter1: 1, word2: downWords[1], letter2: 6)
+        newPuzzle.assignCrossing(word1: acrossWords[2], letter1: 3, word2: downWords[2], letter2: 0)
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -285,6 +285,9 @@ class ViewController: UIViewController {
         }
         for letter in currentWord!.wordLetters {
             letter.known = true
+            if letter.crossingLetter != nil {
+                letter.crossingLetter?.known = true
+            }
         }
         updateBlanks(word: currentWord!.name)
         wordBlanks.text = ""
@@ -292,7 +295,6 @@ class ViewController: UIViewController {
     }
     
     @IBAction func guessPressed(_ sender: Any) {
-        // TODO: add wordle clues for crossing letters that have been found
         if currentWord != nil {
             if guessField.text!.count == 0 {
                 wordTries.text = "Don't forget to guess!"
@@ -307,6 +309,9 @@ class ViewController: UIViewController {
                         
                         if clueLetters[guessedLetterInd] == guessedWord[guessedLetterInd] {
                             currentWord!.wordLetters[guessedLetterInd].known = true
+                            if currentWord!.wordLetters[guessedLetterInd].crossingLetter != nil {
+                                currentWord!.wordLetters[guessedLetterInd].crossingLetter?.known = true
+                            }
                         } else {
                             currentWord!.yellowLetters.append(guessedWord[guessedLetterInd])
                             if gameMode != "Pro" {
