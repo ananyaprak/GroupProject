@@ -28,6 +28,9 @@ class LoginViewController: UIViewController {
         
         // TODO: add crossle logo
         // TODO: make everything pretty, change defaults
+        // TODO: add core data
+        // TODO: constrain everything
+            //  if possible, constrain labels to crossword
             
     }
     

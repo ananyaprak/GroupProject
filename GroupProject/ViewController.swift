@@ -5,8 +5,6 @@
 //  Created by AAAVPrakash12 on 10/6/22.
 //
 
-// TODO: add core data :(
-
 import UIKit
 
 class ViewController: UIViewController {
