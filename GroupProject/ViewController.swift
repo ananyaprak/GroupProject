@@ -65,7 +65,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var cwLabel32: UILabel!
     @IBOutlet weak var cwLabel33: UILabel!
     
-    var currentWord:Word?
+    var currentWord:WordClass?
     @IBOutlet weak var guessField: UITextField!
     var currentButton:UIButton?
     var button:String = ""
@@ -185,6 +185,8 @@ class ViewController: UIViewController {
     
     override func  viewWillDisappear(_ animated: Bool) {
         timerOn = false
+        
+        
     }
     
     func runMain(seconds:Int, duration:UInt64) {
@@ -244,7 +246,7 @@ class ViewController: UIViewController {
     
     func clueButtons(isAcross:Bool) {
         var directionList:Array<UIButton>
-        var puzzleDirectionList:Array<Word>
+        var puzzleDirectionList:Array<WordClass>
         var direction:String
         if isAcross {
             directionList = [across5, across4, across3, across2, across1]
@@ -314,7 +316,7 @@ class ViewController: UIViewController {
             guessButton.isUserInteractionEnabled = true
         }
         
-        if gameMode != "Pro" {
+        if currentUser?.value(forKey: "gameMode") as! String != "Pro" {
             currentYellows.text = ""
             for letter in currentWord!.yellowLetters {
                 currentYellows.text! += String(letter) + " "
@@ -331,7 +333,7 @@ class ViewController: UIViewController {
         var wordSeparated = ""
         var currentLetter = 0
         for letter in wordComponents {
-            if currentWord?.wordLetters[currentLetter].known == true && gameMode == "Noob" {
+            if currentWord?.wordLetters[currentLetter].known == true && currentUser?.value(forKey: "gameMode") as! String == "Noob" {
                 wordSeparated += "\(letter) "
             } else {
                 wordSeparated += "_ "
@@ -418,14 +420,14 @@ class ViewController: UIViewController {
                             }
                         } else {
                             currentWord!.yellowLetters.append(guessedWord[guessedLetterInd])
-                            if gameMode != "Pro" {
+                            if currentUser?.value(forKey: "gameMode") as! String != "Pro" {
                                 currentYellows.text! += String(guessedWord[guessedLetterInd]) + " "
                             }
                         }
                         
                     } else if !currentWord!.redLetters.contains(guessedWord[guessedLetterInd]) && !currentWord!.yellowLetters.contains(guessedWord[guessedLetterInd]) {
                         currentWord!.redLetters.append(guessedWord[guessedLetterInd])
-                        if gameMode != "Pro" {
+                        if currentUser?.value(forKey: "gameMode") as! String != "Pro" {
                             currentReds.text! += String(guessedWord[guessedLetterInd]) + " "
                         }
                     }

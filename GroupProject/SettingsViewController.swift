@@ -6,13 +6,16 @@
 //
 
 import UIKit
+import CoreData
 
-var gameMode = "Noob"
-var showTime = true
-var showTries = true
-var emailSaved = ""
+let settings = NSEntityDescription.insertNewObject(forEntityName: "Settings", into: context)
 
 class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    var gameModeNew:String?
+    var emailSavedNew:String?
+    var showTimeNew:Bool?
+    var showTriesNew:Bool?
     
     @IBOutlet weak var modePicker: UIPickerView!
     let pickerData = ["Noob", "Gamer", "Pro"]
@@ -33,13 +36,13 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        modePicker.selectRow(pickerData.firstIndex(of: gameMode)!, inComponent: 0, animated: true)
+        modePicker.selectRow(pickerData.firstIndex(of: currentUser?.value(forKey: "gameMode") as! String)!, inComponent: 0, animated: true)
         setModeDescription()
         
-        timeSwitch.setOn(showTime, animated: false)
-        triesSwitch.setOn(showTries, animated: false)
+        timeSwitch.setOn(currentUser?.value(forKey: "showTime") as! Bool, animated: false)
+        triesSwitch.setOn(currentUser?.value(forKey: "showTries") as! Bool, animated: false)
         
-        rememberEmail.text = emailSaved
+        rememberEmail.text = currentUser?.value(forKey: "emailSaved") as? String
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -55,41 +58,63 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        gameMode = pickerData[row]
+        gameModeNew = pickerData[row]
+        currentUser?.setValue(gameModeNew, forKey: "gameMode")
+        saveContext()
         setModeDescription()
     }
     
     func setModeDescription() {
-        if gameMode == "Noob" {
+        if gameModeNew == "Noob" {
             modeDescription.text = "Green, Yellow, and Red Wordle clues will show."
-        } else if gameMode == "Gamer" {
+        } else if gameModeNew == "Gamer" {
             modeDescription.text = "Yellow and Red World clues will show, Green will not."
-        } else if gameMode == "Pro" {
+        } else if gameModeNew == "Pro" {
             modeDescription.text = "No Worlde clues will show."
         }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        emailSaved = rememberEmail.text ?? ""
+        emailSavedNew = rememberEmail.text ?? ""
+        currentUser?.setValue(emailSavedNew, forKey: "emailSaved")
+        saveContext()
+    }
+    
+    func saveContext() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
     }
     
     @IBAction func timeSwitchChanged(_ sender: UISwitch) {
         if sender.isOn {
-            showTime = true
+            showTimeNew = true
         } else {
-            showTime = false
+            showTimeNew = false
         }
-        timeSwitch.setOn(showTime, animated: true)
+        timeSwitch.setOn(showTimeNew!, animated: true)
+        currentUser?.setValue(showTimeNew, forKey: "showTime")
+        saveContext()
     }
     
     
     @IBAction func triesSwitchChanged(_ sender: UISwitch) {
         if sender.isOn {
-            showTries = true
+            showTriesNew = true
         } else {
-            showTries = false
+            showTriesNew = false
         }
-        triesSwitch.setOn(showTries, animated: true)
+        triesSwitch.setOn(showTriesNew!, animated: true)
+        currentUser?.setValue(showTriesNew, forKey: "showTries")
+        saveContext()
     }
 
 }

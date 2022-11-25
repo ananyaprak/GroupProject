@@ -7,6 +7,15 @@
 
 import UIKit
 import FirebaseAuth
+import CoreData
+
+// TODO: fix emailSaved OR delete
+
+var account:String = ""
+var currentUser:NSManagedObject?
+
+let appDelegate = UIApplication.shared.delegate as! AppDelegate
+let context = appDelegate.persistentContainer.viewContext
 
 class LoginViewController: UIViewController {
 
@@ -24,7 +33,9 @@ class LoginViewController: UIViewController {
         pwField.isSecureTextEntry = true
         confirmLabel.text = ""
         confirmField.isHidden = true
-        emailField.text = emailSaved
+        emailField.text = currentUser?.value(forKey: "emailSaved") as? String
+        
+        // do not uncomment/delete: clearUserData()
         
         // TODO: add crossle logo
         // TODO: make everything pretty, change defaults
@@ -35,7 +46,7 @@ class LoginViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        emailField.text = emailSaved
+        emailField.text = currentUser?.value(forKey: "emailSaved") as? String
     }
     
     @IBAction func onSegmentChanged(_ sender: Any) {
@@ -53,6 +64,32 @@ class LoginViewController: UIViewController {
         }
     }
     
+    func clearUserData() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Settings")
+        var fetchedResults:[NSManagedObject]
+
+        do {
+            try fetchedResults = context.fetch(request) as! [NSManagedObject]
+
+            if fetchedResults.count > 0 {
+                for result:AnyObject in fetchedResults {
+                    context.delete(result as! NSManagedObject)
+                    print("\(result) has been deleted")
+                }
+            }
+            saveContext()
+
+        } catch {
+            let nserror = error as NSError
+            NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
+            abort()
+        }
+
+    }
+    
     
     @IBAction func loginPressed(_ sender: Any) {
         if logsignButton.titleLabel!.text == "Sign In" {
@@ -61,6 +98,20 @@ class LoginViewController: UIViewController {
                 if let error = error as NSError? {
                     self.errorMsg.text = "\(error.localizedDescription)"
                 } else {
+                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Settings")
+                    let sortDescriptor = NSSortDescriptor(key: "accountEmail", ascending: true)
+                    fetchRequest.sortDescriptors = [sortDescriptor]
+                    do {
+                        let users = try context.fetch(fetchRequest) as! [NSManagedObject]
+                        for user in users {
+                            if user.value(forKey: "accountEmail") as! String == self.emailField.text! {
+                                currentUser = user
+                            }
+                        }
+                    } catch {
+                        print(error)
+                    }
+                    
                     self.errorMsg.text = ""
                     self.performSegue(withIdentifier: "LoginSegue", sender: nil)
                     self.emailField.text = nil
@@ -75,10 +126,33 @@ class LoginViewController: UIViewController {
                         self.errorMsg.text = "\(error.localizedDescription)"
                     } else {
                         self.errorMsg.text = ""
+                        let settings = NSEntityDescription.insertNewObject(forEntityName: "Settings", into: context)
+                        account = self.emailField.text!
+                        settings.setValue(account, forKey: "accountEmail")
+                        settings.setValue("Noob", forKey: "gameMode")
+                        settings.setValue(true, forKey: "showTime")
+                        settings.setValue(true, forKey: "showTries")
+                        settings.setValue("", forKey: "emailSaved")
+                        settings.setValue([], forKey: "puzzleList")
+                        self.saveContext()
                     }
                 }
             } else {
                 errorMsg.text! = "Passwords do not match"
+            }
+        }
+    }
+    
+    func saveContext() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
     }

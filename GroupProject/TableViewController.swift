@@ -7,11 +7,11 @@
 
 import UIKit
 
-public class Letter {
+public class LetterClass {
     var letter:Character
     var known:Bool
     var index:Int
-    var crossingLetter:Letter? = nil
+    var crossingLetter:LetterClass? = nil
     var cwBox:UILabel? = nil
     
     init(letter:Character, index:Int) {
@@ -20,7 +20,7 @@ public class Letter {
         self.index = index
     }
     
-    func assignCrossing(letter:Letter) {
+    func assignCrossing(letter:LetterClass) {
         self.crossingLetter = letter
     }
     
@@ -29,12 +29,12 @@ public class Letter {
     }
 }
 
-public class Word {
+public class WordClass {
     var name:String
     var clueNum:Int
     var tag:String
     var tries:Int
-    var wordLetters:Array<Letter>
+    var wordLetters:Array<LetterClass>
     var yellowLetters:Array<Character>
     var redLetters:Array<Character>
     
@@ -48,13 +48,13 @@ public class Word {
         self.redLetters = []
         let wordComponents = Array(name)
         for letterInd in 0...(wordComponents.count-1) {
-            self.wordLetters.append(Letter(letter: wordComponents[letterInd], index:letterInd))
+            self.wordLetters.append(LetterClass(letter: wordComponents[letterInd], index:letterInd))
         }
     }
     
 }
 
-public class Puzzle {
+public class PuzzleClass {
     var title:String
     var status:String
     var image:UIImage
@@ -63,8 +63,8 @@ public class Puzzle {
     var fancyTime:String
     var cluesCompleted:[String] = []
     
-    var acrossList:[Word] = []
-    var downList:[Word] = []
+    var acrossList:[WordClass] = []
+    var downList:[WordClass] = []
     
     init(title:String, status:String = "Locked", image:String) {
         self.title = title
@@ -75,12 +75,12 @@ public class Puzzle {
         self.fancyTime = "00:00:00"
     }
     
-    func addAcross(word:Word) {
+    func addAcross(word:WordClass) {
         word.tag = String(word.clueNum) + " Across"
         acrossList.append(word)
     }
     
-    func addDown(word:Word) {
+    func addDown(word:WordClass) {
         word.tag = String(word.clueNum) + " Down"
         downList.append(word)
     }
@@ -100,8 +100,8 @@ public class Puzzle {
     }
     
     func assignCrossing(word1:String, letter1:Int, word2:String, letter2:Int) {
-        var acrossWord:Word?
-        var downWord:Word?
+        var acrossWord:WordClass?
+        var downWord:WordClass?
         for word in acrossList {
             if word.name == word1 {
                 acrossWord = word
@@ -120,7 +120,7 @@ public class Puzzle {
 
 }
 
-public var puzzleList:[Puzzle] = []
+public var puzzleList:[PuzzleClass] = []
 public var puzzleIndex:Int? = nil
 
 class TableViewController: UITableViewController {
@@ -152,15 +152,15 @@ class TableViewController: UITableViewController {
             downNums = [1,2,6]
         }
         
-        let newPuzzle = Puzzle(title: name, status: status, image: image)
+        let newPuzzle = PuzzleClass(title: name, status: status, image: image)
         puzzleList.append(newPuzzle)
         
         for wordInd in 0...(acrossWords.count-1) {
-            let newWord = Word(name: acrossWords[wordInd], clueNum: acrossNums[wordInd])
+            let newWord = WordClass(name: acrossWords[wordInd], clueNum: acrossNums[wordInd])
             newPuzzle.addAcross(word: newWord)
         }
         for wordInd in 0...(downWords.count-1) {
-            let newWord = Word(name: downWords[wordInd], clueNum: downNums[wordInd])
+            let newWord = WordClass(name: downWords[wordInd], clueNum: downNums[wordInd])
             newPuzzle.addDown(word: newWord)
         }
         
@@ -184,10 +184,10 @@ class TableViewController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath)
             let row = indexPath.row
         cell.textLabel?.text = "\(puzzleList[row].title)\n   \(puzzleList[row].status)"
-        if showTime {
+        if currentUser?.value(forKey: "showTime") as! Bool {
             cell.textLabel?.text! += "\n   Elapsed Time: \(puzzleList[row].fancyTime)"
         }
-        if showTries {
+        if currentUser?.value(forKey: "showTries") as! Bool {
             cell.textLabel?.text! += "\n   Total Tries: \(puzzleList[row].totalTries)"
         }
             cell.textLabel?.numberOfLines = 4
