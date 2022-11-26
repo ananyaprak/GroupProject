@@ -17,6 +17,8 @@ var currentUser:NSManagedObject?
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
 let context = appDelegate.persistentContainer.viewContext
 
+let bgColor = UIColor(red: 246/255.0, green: 216/255.0, blue: 156/255.0, alpha: 1.0)
+
 class LoginViewController: UIViewController {
 
     @IBOutlet weak var emailField: UITextField!
@@ -27,13 +29,26 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var segCtrl: UISegmentedControl!
     @IBOutlet weak var confirmLabel: UILabel!
     
+    @IBOutlet weak var emailLabel: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = bgColor
         
         pwField.isSecureTextEntry = true
         confirmLabel.text = ""
         confirmField.isHidden = true
+        confirmField.isSecureTextEntry = true
         emailField.text = currentUser?.value(forKey: "emailSaved") as? String
+        errorMsg.text = ""
+        
+        if let attrFont = UIFont(name: "Noteworthy", size: 30) {
+            let title = "Sign In"
+            let attrTitle = NSAttributedString(string: title, attributes: [NSAttributedString.Key.font: attrFont])
+            logsignButton.setAttributedTitle(attrTitle, for: UIControl.State.normal)
+        }
         
         // do not uncomment/delete:
         // clearUserData()
@@ -53,16 +68,25 @@ class LoginViewController: UIViewController {
     @IBAction func onSegmentChanged(_ sender: Any) {
         switch segCtrl.selectedSegmentIndex {
         case 0:
-            logsignButton.setTitle("Sign In", for: .normal)
             confirmLabel.text = ""
             confirmField.isHidden = true
+            if let attrFont = UIFont(name: "Noteworthy", size: 30) {
+                let title = "Sign In"
+                let attrTitle = NSAttributedString(string: title, attributes: [NSAttributedString.Key.font: attrFont])
+                logsignButton.setAttributedTitle(attrTitle, for: UIControl.State.normal)
+            }
         case 1:
-            logsignButton.setTitle("Sign Up", for: .normal)
             confirmLabel.text = "Confirm Password"
             confirmField.isHidden = false
+            if let attrFont = UIFont(name: "Noteworthy", size: 30) {
+                let title = "Sign Up"
+                let attrTitle = NSAttributedString(string: title, attributes: [NSAttributedString.Key.font: attrFont])
+                logsignButton.setAttributedTitle(attrTitle, for: UIControl.State.normal)
+            }
         default:
             logsignButton.setTitle("Error", for: .normal)
         }
+        
     }
     
     func clearUserData() {
