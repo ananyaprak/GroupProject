@@ -83,6 +83,8 @@ class ViewController: UIViewController {
     var time = (0, 0, 0)
     var oldTime = (0, 0, 0)
     
+    var currentCluesCompleted = [String]()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -158,9 +160,20 @@ class ViewController: UIViewController {
                     }
                 }
             }
+            
         }
         
-        totalTries.text = "Total Tries: \(puzzleList[puzzleIndex!].totalTries)"
+        var triesRN = ""
+        if puzzleCoreData {
+            currentCluesCompleted = corePuzzles[puzzleIndex!].value(forKey: "cluesCompleted") as! [String]
+            let tempTries = corePuzzles[puzzleIndex!].value(forKey: "totalTries") as! UInt16
+            triesRN = String(tempTries)
+        } else {
+            currentCluesCompleted = puzzleList[puzzleIndex!].cluesCompleted
+            triesRN = String(puzzleList[puzzleIndex!].totalTries)
+        }
+        
+        totalTries.text = "Total Tries: \(triesRN)"
         wordTries.text = ""
         wordSelected.text = ""
         wordBlanks.text = ""
@@ -170,14 +183,27 @@ class ViewController: UIViewController {
         clueButtons(isAcross: true)
         clueButtons(isAcross: false)
         
-        current = DispatchTime(uptimeNanoseconds: puzzleList[puzzleIndex!].elapsedTime)
-        if puzzleList[puzzleIndex!].status != "Completed" {
+        var statusRN = ""
+        var fancyRN = ""
+        var elapsedRN:UInt64
+        if puzzleCoreData {
+            current = DispatchTime(uptimeNanoseconds: corePuzzles[puzzleIndex!].value(forKey: "elapsedTime") as! UInt64)
+            statusRN = corePuzzles[puzzleIndex!].value(forKey: "status") as! String
+            fancyRN = corePuzzles[puzzleIndex!].value(forKey: "fancyTime") as! String
+            elapsedRN = corePuzzles[puzzleIndex!].value(forKey: "elapsedTime") as! UInt64
+        } else {
+            current = DispatchTime(uptimeNanoseconds: puzzleList[puzzleIndex!].elapsedTime)
+            statusRN = puzzleList[puzzleIndex!].status
+            fancyRN = puzzleList[puzzleIndex!].fancyTime
+            elapsedRN = puzzleList[puzzleIndex!].elapsedTime
+        }
+        if statusRN != "Completed" {
             timerOn = true
             
         } else {
-            durationLabel.text = "Elapsed Time: \(puzzleList[puzzleIndex!].fancyTime)"
+            durationLabel.text = "Elapsed Time: \(fancyRN)"
         }
-        nanoToSeconds(nanoTime: puzzleList[puzzleIndex!].elapsedTime)
+        nanoToSeconds(nanoTime: elapsedRN)
         oldTime = convertSeconds(seconds: seconds)
         runBackground()
         
@@ -185,8 +211,12 @@ class ViewController: UIViewController {
     
     override func  viewWillDisappear(_ animated: Bool) {
         timerOn = false
-        
-        
+        if puzzleCoreData {
+            corePuzzles[puzzleIndex!].setValue(currentCluesCompleted, forKey: "cluesCompleted")
+            saveContext()
+        } else {
+            puzzleList[puzzleIndex!].cluesCompleted = currentCluesCompleted
+        }
     }
     
     func runMain(seconds:Int, duration:UInt64) {
@@ -214,8 +244,14 @@ class ViewController: UIViewController {
                 
                 let timeText = "\(time0):\(time1):\(time2)"
                 self.durationLabel.text = "Elapsed Time: \(timeText)"
-                puzzleList[puzzleIndex!].elapsedTime = duration
-                puzzleList[puzzleIndex!].fancyTime = timeText
+                if puzzleCoreData {
+                    corePuzzles[puzzleIndex!].setValue(duration, forKey: "elapsedTime")
+                    corePuzzles[puzzleIndex!].setValue(timeText, forKey: "fancyTime")
+                    self.saveContext()
+                } else {
+                    puzzleList[puzzleIndex!].elapsedTime = duration
+                    puzzleList[puzzleIndex!].fancyTime = timeText
+                }
             }
     }
     
@@ -265,7 +301,7 @@ class ViewController: UIViewController {
             } else {
                 let buttonNum = String(puzzleDirectionList[((numButtons - 1) - i)].clueNum)
                 directionList[i].setTitle(buttonNum, for: .normal)
-                if puzzleList[puzzleIndex!].cluesCompleted.contains(buttonNum + direction) {
+                if currentCluesCompleted.contains(buttonNum + direction) {
                     directionList[i].tintColor = .gray
                 }
             }
@@ -305,7 +341,7 @@ class ViewController: UIViewController {
         
         updateBlanks(word:word)
         
-        if puzzleList[puzzleIndex!].cluesCompleted.contains(button) {
+        if currentCluesCompleted.contains(button) {
             guessField.isUserInteractionEnabled = false
             guessField.text = word
             guessButton.isUserInteractionEnabled = false
@@ -344,8 +380,17 @@ class ViewController: UIViewController {
     }
     
     func incrementTries(correct:Bool) {
-        puzzleList[puzzleIndex!].totalTries += 1
-        totalTries.text = "Total Tries: \(puzzleList[puzzleIndex!].totalTries)"
+        if puzzleCoreData {
+            var currentTotalTries = corePuzzles[puzzleIndex!].value(forKey: "totalTries") as! Int
+            currentTotalTries += 1
+            corePuzzles[puzzleIndex!].setValue(currentTotalTries, forKey: "totalTries")
+            saveContext()
+            totalTries.text = "Total Tries: \(corePuzzles[puzzleIndex!].value(forKey: "totalTries") ?? "totalTries error")"
+        } else {
+            puzzleList[puzzleIndex!].totalTries += 1
+            totalTries.text = "Total Tries: \(puzzleList[puzzleIndex!].totalTries)"
+        }
+        
         
         currentWord?.tries += 1
         if correct {
@@ -362,20 +407,30 @@ class ViewController: UIViewController {
         guessField.text = ""
         wordSelected.text = ""
         wordTries.text = "Correct!"
-        puzzleList[puzzleIndex!].cluesCompleted.append(button)
+        currentCluesCompleted.append(button)
+        print(currentCluesCompleted)
         button = ""
         currentYellows.text = ""
         currentReds.text = ""
-        if puzzleList[puzzleIndex!].cluesCompleted.count == 6 {
+        if currentCluesCompleted.count == 6 {
             timerOn = false
             puzzleList[puzzleIndex!].changeStatus(value: 2)
+            if puzzleCoreData {
+                // minitodo: put this in puzzle class function
+                corePuzzles[puzzleIndex!].setValue("Completed", forKey: "status")
+            }
             var msg = ""
             if puzzleIndex! == (puzzleList.count - 1) {
                 msg = "You've completed all available puzzles :o"
             } else {
                 puzzleList[puzzleIndex! + 1].changeStatus(value: 1)
+                if puzzleCoreData {
+                    // minitodo: put this in puzzle class function
+                    corePuzzles[puzzleIndex!].setValue("Unlocked", forKey: "status")
+                }
                 msg = "You've unlocked the next puzzle :)"
             }
+            saveContext()
             let controller = UIAlertController(
                 title: "Puzzle Completed!",
                 message: msg,
@@ -439,6 +494,20 @@ class ViewController: UIViewController {
             }
         } else {
             wordTries.text = "Choose a clue first"
+        }
+    }
+    
+    func saveContext() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
         }
     }
 

@@ -1,44 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E258" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Letter" representedClassName="Letter" syncable="YES" codeGenerationType="class">
-        <attribute name="crossingLetter" optional="YES" attributeType="Transformable"/>
-        <attribute name="cwBox" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="known" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="letter" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Puzzle" representedClassName="Puzzle" syncable="YES" codeGenerationType="class">
-        <attribute name="acrossList" optional="YES" attributeType="Transformable"/>
+        <attribute name="acrossWords" optional="YES" attributeType="Transformable"/>
         <attribute name="cluesCompleted" optional="YES" attributeType="Transformable"/>
-        <attribute name="downList" optional="YES" attributeType="Transformable"/>
+        <attribute name="downWords" optional="YES" attributeType="Transformable"/>
         <attribute name="elapsedTime" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="fancyTime" optional="YES" attributeType="String"/>
-        <attribute name="image" optional="YES" attributeType="Binary"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="status" optional="YES" attributeType="String"/>
-        <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="totalTries" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <entity name="Settings" representedClassName="Settings" syncable="YES" codeGenerationType="class">
         <attribute name="accountEmail" optional="YES" attributeType="String"/>
         <attribute name="emailSaved" optional="YES" attributeType="String"/>
         <attribute name="gameMode" optional="YES" attributeType="String"/>
-        <attribute name="puzzleList" optional="YES" attributeType="Transformable"/>
         <attribute name="showTime" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="showTries" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
     </entity>
     <entity name="Word" representedClassName="Word" syncable="YES" codeGenerationType="class">
-        <attribute name="clueNum" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="redLetters" optional="YES" attributeType="Transformable"/>
-        <attribute name="tag" optional="YES" attributeType="String"/>
         <attribute name="tries" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="wordLetters" optional="YES" attributeType="Transformable"/>
+        <attribute name="word" optional="YES" attributeType="String"/>
         <attribute name="yellowLetters" optional="YES" attributeType="Transformable"/>
     </entity>
     <elements>
-        <element name="Puzzle" positionX="-63" positionY="-18" width="128" height="164"/>
-        <element name="Word" positionX="-54" positionY="63" width="128" height="134"/>
-        <element name="Letter" positionX="-36" positionY="90" width="128" height="104"/>
-        <element name="Settings" positionX="-18" positionY="99" width="128" height="119"/>
+        <element name="Puzzle" positionX="-63" positionY="-18" width="128" height="149"/>
+        <element name="Word" positionX="-54" positionY="63" width="128" height="89"/>
+        <element name="Letter" positionX="-36" positionY="90" width="128" height="44"/>
+        <element name="Settings" positionX="-18" positionY="99" width="128" height="104"/>
     </elements>
 </model>

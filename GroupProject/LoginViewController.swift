@@ -35,7 +35,8 @@ class LoginViewController: UIViewController {
         confirmField.isHidden = true
         emailField.text = currentUser?.value(forKey: "emailSaved") as? String
         
-        // do not uncomment/delete: clearUserData()
+        // do not uncomment/delete:
+        // clearUserData()
         
         // TODO: add crossle logo
         // TODO: make everything pretty, change defaults
@@ -103,6 +104,17 @@ class LoginViewController: UIViewController {
                     fetchRequest.sortDescriptors = [sortDescriptor]
                     do {
                         let users = try context.fetch(fetchRequest) as! [NSManagedObject]
+                        if users.count == 0 {
+                            let settings = NSEntityDescription.insertNewObject(forEntityName: "Settings", into: context)
+                            account = self.emailField.text!
+                            settings.setValue(account, forKey: "accountEmail")
+                            settings.setValue("Noob", forKey: "gameMode")
+                            settings.setValue(true, forKey: "showTime")
+                            settings.setValue(true, forKey: "showTries")
+                            settings.setValue("", forKey: "emailSaved")
+                            self.saveContext()
+                            print(settings)
+                        }
                         for user in users {
                             if user.value(forKey: "accountEmail") as! String == self.emailField.text! {
                                 currentUser = user
@@ -133,7 +145,6 @@ class LoginViewController: UIViewController {
                         settings.setValue(true, forKey: "showTime")
                         settings.setValue(true, forKey: "showTries")
                         settings.setValue("", forKey: "emailSaved")
-                        settings.setValue([], forKey: "puzzleList")
                         self.saveContext()
                     }
                 }
