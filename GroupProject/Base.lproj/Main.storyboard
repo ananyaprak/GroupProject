@@ -83,7 +83,7 @@
                                     <action selector="loginPressed:" destination="kdl-P7-2pL" eventType="touchUpInside" id="7nN-Cr-APr"/>
                                 </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="dK6-qU-rGK">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Logo_edited" translatesAutoresizingMaskIntoConstraints="NO" id="dK6-qU-rGK">
                                 <rect key="frame" x="80" y="69" width="270" height="203"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -129,7 +129,9 @@
                             <outlet property="delegate" destination="8kb-eC-YCb" id="yIa-hu-UuX"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="ugR-DO-Zif"/>
+                    <navigationItem key="navigationItem" id="ugR-DO-Zif">
+                        <barButtonItem key="backBarButtonItem" title="Puzzles" id="n1r-VY-Acv"/>
+                    </navigationItem>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="TableToPuzzle" id="IzL-VE-Nud"/>
                     </connections>
@@ -786,15 +788,17 @@
                                     <action selector="logoutPressed:" destination="ly4-e1-SgO" eventType="touchUpInside" id="rIH-M8-szO"/>
                                 </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="Set-dC-kp1">
-                                <rect key="frame" x="94" y="140" width="240" height="128"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Logo_edited" translatesAutoresizingMaskIntoConstraints="NO" id="Set-dC-kp1">
+                                <rect key="frame" x="20" y="88" width="388" height="180"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="nv7-fp-CYu"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="aPZ-d1-Nh3"/>
+                    <navigationItem key="navigationItem" id="aPZ-d1-Nh3">
+                        <barButtonItem key="backBarButtonItem" title="Main Menu" id="rGU-MO-8qL"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="htpButton" destination="7b9-Mb-EtY" id="KHc-bH-XGf"/>
                         <outlet property="lgtButton" destination="sGs-bb-N0U" id="Xcq-Xv-9w4"/>
@@ -910,8 +914,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Logo_edited" width="947" height="945"/>
         <image name="crossword1" width="710" height="904"/>
-        <image name="logo" width="985" height="964"/>
         <namedColor name="AccentColor">
             <color red="1" green="0.79199999570846558" blue="0.15700000524520874" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
