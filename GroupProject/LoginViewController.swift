@@ -49,6 +49,7 @@ class LoginViewController: UIViewController {
         // clearUserData()
         
         // TODO: add/edit core data
+            // if not, add warning that progress is deleted
         // TODO: constrain everything
             //  if possible, constrain labels to crossword
             

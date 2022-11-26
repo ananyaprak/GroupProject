@@ -35,13 +35,14 @@ Minor elements used:
 
 **Work Distribution Table**
 | Required Feature | Description | Who/Percentage Worked On |
-| :---        |    :----:   |          ---: |
-| Login/Register | ? | Ananya (100%) |
-| UI Design | ? | Ananya (100%) |
-| Settings | ? | Ananya (100%) |
-| Instructions | ? | Zachary (100%) |
-| Game Logic | ? | Ananya (100%) |
-| Images | ? | Ananya (100%) |
-| Core Data | ? | Ananya (100%) |
-| Multithreading | ? | Ananya (100%) |
-(https://github.com/ananyaprak/GroupProject/graphs/contributors)
+| --- | ----- | --- |
+| Login/Register | Set up Firebase, configure login/register/lougout paths | Ananya (100%) |
+| UI Design | Select and implement fonts, colors, and layout throughout app | Ananya (100%) |
+| Settings | Allow users to configure data in puzzle table and change gamemode | Ananya (100%) |
+| Instructions | Explain gameplay how-to | Zachary (100%) |
+| Game Logic | Create and implement game using coding logic | Ananya (100%) |
+| Images | Create logo and crosswords | Ananya (100%) |
+| Core Data | Allow settings to persist between launches, and TODO | Ananya (50%) |
+| Multithreading | Show and save elapsed time per puzzle | Ananya (100%) |
+
+https://github.com/ananyaprak/GroupProject/graphs/contributors
