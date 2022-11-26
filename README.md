@@ -1,6 +1,6 @@
-**Name of Project:** Crossle
-**Team Members:** Ananya Prakash, Zachary Bricken
-**Dependencies:** Xcode 13.4.1, Swift 5.6.1, FirebaseAuth
+**Name of Project:** Crossle\
+**Team Members:** Ananya Prakash, Zachary Bricken\
+**Dependencies:** Xcode 13.4.1, Swift 5.6.1, FirebaseAuth\
 
 **Special Instructions:**
 - Use iPhone 13 Pro Max Simulator in Portrait Mode
@@ -8,7 +8,7 @@
   - Email: a@a.com
   - PW: aaaaaaa (basically a x7)
 
-**Required Feature Checklist**
+**Required Feature Checklist**\
 Some features have been omitted due to 2 of our members dropping the class (with permission from the Professor)
 
 - [x] Login/register path with Firebase
@@ -36,5 +36,12 @@ Minor elements used:
 **Work Distribution Table**
 | Required Feature | Description | Who/Percentage Worked On |
 | :---        |    :----:   |          ---: |
-| ? | ? | ? |
-| ? | ? | ? |
+| Login/Register | ? | Ananya (100%) |
+| UI Design | ? | Ananya (100%) |
+| Settings | ? | Ananya (100%) |
+| Instructions | ? | Zachary (100%) |
+| Game Logic | ? | Ananya (100%) |
+| Images | ? | Ananya (100%) |
+| Core Data | ? | Ananya (100%) |
+| Multithreading | ? | Ananya (100%) |
+(https://github.com/ananyaprak/GroupProject/graphs/contributors)

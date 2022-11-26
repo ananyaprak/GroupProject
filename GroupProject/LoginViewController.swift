@@ -48,8 +48,7 @@ class LoginViewController: UIViewController {
         // do not uncomment/delete:
         // clearUserData()
         
-        // TODO: make everything pretty, change defaults
-        // TODO: add core data
+        // TODO: add/edit core data
         // TODO: constrain everything
             //  if possible, constrain labels to crossword
             
