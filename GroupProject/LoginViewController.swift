@@ -157,6 +157,10 @@ class LoginViewController: UIViewController {
                         settings.setValue(true, forKey: "showTime")
                         settings.setValue(true, forKey: "showTries")
                         self.saveContext()
+                        self.performSegue(withIdentifier: "LoginSegue", sender: nil)
+                        self.emailField.text = ""
+                        self.confirmField.text = ""
+                        self.pwField.text = ""
                     }
                 }
             } else {
