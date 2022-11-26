@@ -88,8 +88,17 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = bgColor
+        
         title = puzzleList[puzzleIndex!].title
         puzzleImage.image = puzzleList[puzzleIndex!].image
+        
+        if let attrFont = UIFont(name: "Noteworthy", size: 17) {
+            let title = "Guess"
+            let attrTitle = NSAttributedString(string: title, attributes: [NSAttributedString.Key.font: attrFont])
+            guessButton.setAttributedTitle(attrTitle, for: UIControl.State.normal)
+        }
         
         let _ = [cwLabel0, cwLabel1, cwLabel2, cwLabel3, cwLabel4, cwLabel5, cwLabel6, cwLabel7, cwLabel8, cwLabel9, cwLabel10, cwLabel11, cwLabel12, cwLabel13, cwLabel14, cwLabel15, cwLabel16, cwLabel17, cwLabel18, cwLabel19, cwLabel20, cwLabel21, cwLabel22, cwLabel23, cwLabel24, cwLabel25, cwLabel26, cwLabel27, cwLabel28, cwLabel29, cwLabel30, cwLabel31, cwLabel32, cwLabel33]
         if puzzleImage.image == UIImage(named: "crossword1") {
@@ -121,7 +130,7 @@ class ViewController: UIViewController {
                 }
                 
                 for letter in word.wordLetters {
-                    if letter.known {
+                    if letter.known && currentUser?.value(forKey: "gameMode") as! String == "Noob" {
                         letter.cwBox!.text = String(letter.letter)
                     } else {
                         letter.cwBox!.text = ""
@@ -153,7 +162,7 @@ class ViewController: UIViewController {
                 }
                 
                 for letter in word.wordLetters {
-                    if letter.known {
+                    if letter.known && currentUser?.value(forKey: "gameMode") as! String == "Noob" {
                         letter.cwBox!.text = String(letter.letter)
                     } else {
                         letter.cwBox!.text = ""
@@ -300,7 +309,11 @@ class ViewController: UIViewController {
                 directionList[i].isHidden = true
             } else {
                 let buttonNum = String(puzzleDirectionList[((numButtons - 1) - i)].clueNum)
-                directionList[i].setTitle(buttonNum, for: .normal)
+                if let attrFont = UIFont(name: "Noteworthy", size: 17) {
+                    let title = buttonNum
+                    let attrTitle = NSAttributedString(string: title, attributes: [NSAttributedString.Key.font: attrFont])
+                    directionList[i].setAttributedTitle(attrTitle, for: UIControl.State.normal)
+                }
                 if currentCluesCompleted.contains(buttonNum + direction) {
                     directionList[i].tintColor = .gray
                 }
@@ -369,7 +382,7 @@ class ViewController: UIViewController {
         var wordSeparated = ""
         var currentLetter = 0
         for letter in wordComponents {
-            if currentWord?.wordLetters[currentLetter].known == true && currentUser?.value(forKey: "gameMode") as! String == "Noob" {
+            if currentWord?.wordLetters[currentLetter].known == true && (currentUser?.value(forKey: "gameMode") as! String == "Noob" || currentCluesCompleted.contains(button) || currentWord!.wordLetters[currentLetter].crossingLetter?.known == true) {
                 wordSeparated += "\(letter) "
             } else {
                 wordSeparated += "_ "
@@ -468,21 +481,23 @@ class ViewController: UIViewController {
                         
                         if clueLetters[guessedLetterInd] == guessedWord[guessedLetterInd] {
                             currentWord!.wordLetters[guessedLetterInd].known = true
-                            currentWord!.wordLetters[guessedLetterInd].cwBox!.text = String(currentWord!.wordLetters[guessedLetterInd].letter)
+                            if currentUser?.value(forKey: "gameMode") as! String == "Noob" {
+                                currentWord!.wordLetters[guessedLetterInd].cwBox!.text = String(currentWord!.wordLetters[guessedLetterInd].letter)
+                            }
                             if currentWord!.wordLetters[guessedLetterInd].crossingLetter != nil {
                                 currentWord!.wordLetters[guessedLetterInd].crossingLetter?.known = true
                                 currentWord!.wordLetters[guessedLetterInd].crossingLetter?.cwBox!.text = String(currentWord!.wordLetters[guessedLetterInd].letter)
                             }
                         } else {
                             currentWord!.yellowLetters.append(guessedWord[guessedLetterInd])
-                            if currentUser?.value(forKey: "gameMode") as! String != "Pro" {
+                            if currentUser?.value(forKey: "gameMode") as! String == "Noob" {
                                 currentYellows.text! += String(guessedWord[guessedLetterInd]) + " "
                             }
                         }
                         
                     } else if !currentWord!.redLetters.contains(guessedWord[guessedLetterInd]) && !currentWord!.yellowLetters.contains(guessedWord[guessedLetterInd]) {
                         currentWord!.redLetters.append(guessedWord[guessedLetterInd])
-                        if currentUser?.value(forKey: "gameMode") as! String != "Pro" {
+                        if currentUser?.value(forKey: "gameMode") as! String == "Noob" {
                             currentReds.text! += String(guessedWord[guessedLetterInd]) + " "
                         }
                     }

@@ -9,8 +9,6 @@ import UIKit
 import FirebaseAuth
 import CoreData
 
-// TODO: fix emailSaved OR delete
-
 var account:String = ""
 var currentUser:NSManagedObject?
 
@@ -29,8 +27,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var segCtrl: UISegmentedControl!
     @IBOutlet weak var confirmLabel: UILabel!
     
-    @IBOutlet weak var emailLabel: UILabel!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +37,6 @@ class LoginViewController: UIViewController {
         confirmLabel.text = ""
         confirmField.isHidden = true
         confirmField.isSecureTextEntry = true
-        emailField.text = currentUser?.value(forKey: "emailSaved") as? String
         errorMsg.text = ""
         
         if let attrFont = UIFont(name: "Noteworthy", size: 30) {
@@ -53,16 +48,11 @@ class LoginViewController: UIViewController {
         // do not uncomment/delete:
         // clearUserData()
         
-        // TODO: add crossle logo
         // TODO: make everything pretty, change defaults
         // TODO: add core data
         // TODO: constrain everything
             //  if possible, constrain labels to crossword
             
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        emailField.text = currentUser?.value(forKey: "emailSaved") as? String
     }
     
     @IBAction func onSegmentChanged(_ sender: Any) {
@@ -135,9 +125,7 @@ class LoginViewController: UIViewController {
                             settings.setValue("Noob", forKey: "gameMode")
                             settings.setValue(true, forKey: "showTime")
                             settings.setValue(true, forKey: "showTries")
-                            settings.setValue("", forKey: "emailSaved")
                             self.saveContext()
-                            print(settings)
                         }
                         for user in users {
                             if user.value(forKey: "accountEmail") as! String == self.emailField.text! {
@@ -168,7 +156,6 @@ class LoginViewController: UIViewController {
                         settings.setValue("Noob", forKey: "gameMode")
                         settings.setValue(true, forKey: "showTime")
                         settings.setValue(true, forKey: "showTries")
-                        settings.setValue("", forKey: "emailSaved")
                         self.saveContext()
                     }
                 }

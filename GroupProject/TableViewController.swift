@@ -135,6 +135,8 @@ class TableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = bgColor
+        
         // editable variables for future updates
         let image = "crossword1"
         let numPuzzles = 3
@@ -345,6 +347,7 @@ class TableViewController: UITableViewController {
             timeRN = puzzleList[row].fancyTime
             triesRN = puzzleList[row].totalTries
         }
+        
         cell.textLabel?.text = "\(nameRN)\n   \(statusRN)"
         if currentUser?.value(forKey: "showTime") as! Bool {
             cell.textLabel?.text! += "\n   Elapsed Time: \(timeRN)"
@@ -352,7 +355,11 @@ class TableViewController: UITableViewController {
         if currentUser?.value(forKey: "showTries") as! Bool {
             cell.textLabel?.text! += "\n   Total Tries: \(triesRN)"
         }
-            cell.textLabel?.numberOfLines = 4
+        
+        cell.backgroundColor = bgColor
+        cell.textLabel?.numberOfLines = 4
+        cell.textLabel?.font = UIFont(name: "Noteworthy", size: 18)
+        
             return cell
     }
     

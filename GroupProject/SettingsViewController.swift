@@ -12,16 +12,13 @@ let settings = NSEntityDescription.insertNewObject(forEntityName: "Settings", in
 
 class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    var gameModeNew:String?
-    var emailSavedNew:String?
-    var showTimeNew:Bool?
-    var showTriesNew:Bool?
+    var gameModeNew:String = "Noob"
+    var showTimeNew:Bool = true
+    var showTriesNew:Bool = true
     
     @IBOutlet weak var modePicker: UIPickerView!
     let pickerData = ["Noob", "Gamer", "Pro"]
     @IBOutlet weak var modeDescription: UILabel!
-    
-    @IBOutlet weak var rememberEmail: UITextField!
     
     @IBOutlet weak var timeSwitch: UISwitch!
     @IBOutlet weak var triesSwitch: UISwitch!
@@ -30,8 +27,12 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = bgColor
+        
         self.modePicker.delegate = self
         self.modePicker.dataSource = self
+        
+        setModeDescription()
 
     }
     
@@ -41,8 +42,6 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         timeSwitch.setOn(currentUser?.value(forKey: "showTime") as! Bool, animated: false)
         triesSwitch.setOn(currentUser?.value(forKey: "showTries") as! Bool, animated: false)
-        
-        rememberEmail.text = currentUser?.value(forKey: "emailSaved") as? String
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -74,12 +73,6 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        emailSavedNew = rememberEmail.text ?? ""
-        currentUser?.setValue(emailSavedNew, forKey: "emailSaved")
-        saveContext()
-    }
-    
     func saveContext() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
@@ -100,7 +93,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         } else {
             showTimeNew = false
         }
-        timeSwitch.setOn(showTimeNew!, animated: true)
+        timeSwitch.setOn(showTimeNew, animated: true)
         currentUser?.setValue(showTimeNew, forKey: "showTime")
         saveContext()
     }
@@ -112,7 +105,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         } else {
             showTriesNew = false
         }
-        triesSwitch.setOn(showTriesNew!, animated: true)
+        triesSwitch.setOn(showTriesNew, animated: true)
         currentUser?.setValue(showTriesNew, forKey: "showTries")
         saveContext()
     }
