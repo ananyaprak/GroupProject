@@ -35,7 +35,7 @@ Minor elements used:
 
 **Work Distribution Table**
 | Required Feature | Description | Who/Percentage Worked On |
-| :---        |    :----:   |          ---: |
+| --- | ----- | --- |
 | Login/Register | Set up Firebase, configure login/register/lougout paths | Ananya (100%) |
 | UI Design | Select and implement fonts, colors, and layout throughout app | Ananya (100%) |
 | Settings | Allow users to configure data in puzzle table and change gamemode | Ananya (100%) |
@@ -44,4 +44,5 @@ Minor elements used:
 | Images | Create logo and crosswords | Ananya (100%) |
 | Core Data | Allow settings to persist between launches, and TODO | Ananya (50%) |
 | Multithreading | Show and save elapsed time per puzzle | Ananya (100%) |
-\https://github.com/ananyaprak/GroupProject/graphs/contributors
+
+https://github.com/ananyaprak/GroupProject/graphs/contributors
