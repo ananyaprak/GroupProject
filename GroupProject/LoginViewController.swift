@@ -140,6 +140,7 @@ class LoginViewController: UIViewController {
                     self.performSegue(withIdentifier: "LoginSegue", sender: nil)
                     self.emailField.text = nil
                     self.pwField.text = nil
+                    puzzleList = [PuzzleClass]()
                 }
             }
         } else if logsignButton.titleLabel!.text == "Sign Up" {
@@ -161,6 +162,8 @@ class LoginViewController: UIViewController {
                         self.emailField.text = ""
                         self.confirmField.text = ""
                         self.pwField.text = ""
+                        currentUser = settings
+                        puzzleList = [PuzzleClass]()
                     }
                 }
             } else {
