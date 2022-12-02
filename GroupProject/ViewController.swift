@@ -30,6 +30,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var down4: UIButton!
     @IBOutlet weak var down5: UIButton!
     
+    var labelList = [UILabel]()
     @IBOutlet weak var cwLabel0: UILabel!
     @IBOutlet weak var cwLabel1: UILabel!
     @IBOutlet weak var cwLabel2: UILabel!
@@ -100,7 +101,8 @@ class ViewController: UIViewController {
             guessButton.setAttributedTitle(attrTitle, for: UIControl.State.normal)
         }
         
-        let _ = [cwLabel0, cwLabel1, cwLabel2, cwLabel3, cwLabel4, cwLabel5, cwLabel6, cwLabel7, cwLabel8, cwLabel9, cwLabel10, cwLabel11, cwLabel12, cwLabel13, cwLabel14, cwLabel15, cwLabel16, cwLabel17, cwLabel18, cwLabel19, cwLabel20, cwLabel21, cwLabel22, cwLabel23, cwLabel24, cwLabel25, cwLabel26, cwLabel27, cwLabel28, cwLabel29, cwLabel30, cwLabel31, cwLabel32, cwLabel33]
+        labelList = [cwLabel0, cwLabel1, cwLabel2, cwLabel3, cwLabel4, cwLabel5, cwLabel6, cwLabel7, cwLabel8, cwLabel9, cwLabel10, cwLabel11, cwLabel12, cwLabel13, cwLabel14, cwLabel15, cwLabel16, cwLabel17, cwLabel18, cwLabel19, cwLabel20, cwLabel21, cwLabel22, cwLabel23, cwLabel24, cwLabel25, cwLabel26, cwLabel27, cwLabel28, cwLabel29, cwLabel30, cwLabel31, cwLabel32, cwLabel33]
+        
         if puzzleImage.image == UIImage(named: "crossword1") {
             for word in puzzleList[puzzleIndex!].acrossList {
                 if word.clueNum == 3 {
@@ -218,6 +220,25 @@ class ViewController: UIViewController {
         
     }
     
+    override func viewDidLayoutSubviews() {
+        placeLabels()
+//        var lstW = [CGFloat]()
+//        var lstH = [CGFloat]()
+//        for labelNum in 0...(labelList.count-1) {
+//            print("\(labelNum): \(labelList[labelNum].frame.midX), \(labelList[labelNum].frame.midY)")
+//            lstW.append(labelList[labelNum].frame.width)
+//            lstH.append(labelList[labelNum].frame.height)
+//        }
+//        print(view.frame.size)
+//        print(puzzleImage.frame.size)
+//        let sumW = lstW.reduce(0, +)
+//        let avgW = sumW / CGFloat(lstW.count)
+//        print(avgW)
+//        let sumH = lstH.reduce(0, +)
+//        let avgH = sumH / CGFloat(lstH.count)
+//        print(avgH)
+    }
+    
     override func  viewWillDisappear(_ animated: Bool) {
         timerOn = false
         if puzzleCoreData {
@@ -227,6 +248,73 @@ class ViewController: UIViewController {
             puzzleList[puzzleIndex!].cluesCompleted = currentCluesCompleted
         }
     }
+    
+    func placeLabels() {
+        var down1Labels = [UILabel]()
+        var down1x = CGFloat(0)
+        var down2Labels = [UILabel]()
+        var down2x = CGFloat(0)
+        var down3Labels = [UILabel]()
+        var down3x = CGFloat(0)
+        var down4Labels = [UILabel]()
+        var down4x = CGFloat(0)
+        var down5Labels = [UILabel]()
+        var down5x = CGFloat(0)
+        var down6Labels = [UILabel]()
+        var down6x = CGFloat(0)
+        var across1Labels = [UILabel]()
+        var across1y = CGFloat(0)
+        var across2Labels = [UILabel]()
+        var across2y = CGFloat(0)
+        var across3Labels = [UILabel]()
+        var across3y = CGFloat(0)
+        var across4Labels = [UILabel]()
+        var across4y = CGFloat(0)
+        var across5Labels = [UILabel]()
+        var across5y = CGFloat(0)
+        var across6Labels = [UILabel]()
+        var across6y = CGFloat(0)
+        let lists = [down1Labels, down2Labels, down3Labels, down4Labels, down5Labels, down6Labels, across1Labels, across2Labels, across3Labels, across4Labels, across5Labels, across6Labels]
+        let coords = [down1x, down2x, down3x, down4x, down5x, down6x, across1y, across2y, across3y, across4y, across5y, across6y]
+        var changeY = CGFloat(0)
+        var changeX = CGFloat(0)
+        if puzzleImage.image == UIImage(named: "crossword1") {
+            down1Labels = [cwLabel0, cwLabel1, cwLabel3, cwLabel8, cwLabel10, cwLabel17]
+            down1x = 285.5
+            down1Labels[0].center.y = 158.5
+            down2Labels = [cwLabel2, cwLabel7, cwLabel9, cwLabel13, cwLabel20, cwLabel21, cwLabel23]
+            down2x = 172.0
+            down6Labels = [cwLabel25, cwLabel30, cwLabel31, cwLabel32, cwLabel33]
+            down6x = 229.0
+            across3Labels = [cwLabel4, cwLabel5, cwLabel6, cwLabel7]
+            across3y = 226.5
+            across4Labels = [cwLabel11, cwLabel12, cwLabel13, cwLabel14, cwLabel15, cwLabel16, cwLabel17, cwLabel18, cwLabel19]
+            across4y = 282.0
+            across5Labels = [cwLabel22, cwLabel23, cwLabel24, cwLabel25, cwLabel26, cwLabel27, cwLabel28, cwLabel29]
+            across5y = 366.0
+            changeY = 27.5
+            changeX = 34.0
+        }
+        for listNum in 0...(lists.count-1) {
+            if listNum < 6 && !lists[listNum].isEmpty {
+                for labelNum in 0...(lists[listNum].count-1) {
+                    lists[listNum][labelNum].center.x = coords[listNum]
+                    if labelNum != 0 {
+                        lists[listNum][labelNum].center.y = lists[listNum][labelNum-1].center.y - changeY
+                    }
+                }
+            } else if !lists[listNum].isEmpty {
+                for labelNum in 0...(lists[listNum].count-1) {
+                    lists[listNum][labelNum].center.y = coords[listNum]
+                    if labelNum != 0 {
+                        lists[listNum][labelNum].center.x = lists[listNum][labelNum-1].center.x - changeX
+                    }
+                }
+            }
+        }
+    }
+    
+    // TODO: move labels programatically
     
     func runMain(seconds:Int, duration:UInt64) {
             mainQueue.async {
@@ -421,7 +509,6 @@ class ViewController: UIViewController {
         wordSelected.text = ""
         wordTries.text = "Correct!"
         currentCluesCompleted.append(button)
-        print(currentCluesCompleted)
         button = ""
         currentYellows.text = ""
         currentReds.text = ""
