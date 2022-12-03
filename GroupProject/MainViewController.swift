@@ -14,6 +14,8 @@ class MainViewController: UIViewController {
     @IBOutlet weak var tableButton: UIButton!
     @IBOutlet weak var lgtButton: UIButton!
     @IBOutlet weak var stgButton: UIButton!
+    @IBOutlet weak var prflButton: UIButton!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()

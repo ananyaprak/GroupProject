@@ -9,6 +9,7 @@ import UIKit
 import CoreData
 
 let settings = NSEntityDescription.insertNewObject(forEntityName: "Settings", into: context)
+let gameModes = ["Noob", "Gamer", "Pro"]
 
 class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -17,7 +18,6 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     var showTriesNew:Bool = true
     
     @IBOutlet weak var modePicker: UIPickerView!
-    let pickerData = ["Noob", "Gamer", "Pro"]
     @IBOutlet weak var modeDescription: UILabel!
     
     @IBOutlet weak var timeSwitch: UISwitch!
@@ -37,7 +37,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        modePicker.selectRow(pickerData.firstIndex(of: currentUser?.value(forKey: "gameMode") as! String)!, inComponent: 0, animated: true)
+        modePicker.selectRow(gameModes.firstIndex(of: currentUser?.value(forKey: "gameMode") as! String)!, inComponent: 0, animated: true)
         setModeDescription()
         
         timeSwitch.setOn(currentUser?.value(forKey: "showTime") as! Bool, animated: false)
@@ -49,15 +49,15 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerData.count
+        return gameModes.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerData[row]
+        return gameModes[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        gameModeNew = pickerData[row]
+        gameModeNew = gameModes[row]
         currentUser?.setValue(gameModeNew, forKey: "gameMode")
         saveContext()
         setModeDescription()
