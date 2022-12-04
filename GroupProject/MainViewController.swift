@@ -26,7 +26,7 @@ class MainViewController: UIViewController {
         tableButton.setAttributedTitle(NSAttributedString(string: "Puzzles", attributes: [NSAttributedString.Key.font: UIFont(name: "Noteworthy", size: 20)!]), for: .normal)
         lgtButton.setAttributedTitle(NSAttributedString(string: "Logout", attributes: [NSAttributedString.Key.font: UIFont(name: "Noteworthy", size: 20)!]), for: .normal)
         stgButton.setAttributedTitle(NSAttributedString(string: "Settings", attributes: [NSAttributedString.Key.font: UIFont(name: "Noteworthy", size: 20)!]), for: .normal)
-        prflButton.setAttributedTitle(NSAttributedString(string: "Settings", attributes: [NSAttributedString.Key.font: UIFont(name: "Noteworthy", size: 20)!]), for: .normal)
+        prflButton.setAttributedTitle(NSAttributedString(string: "Profile", attributes: [NSAttributedString.Key.font: UIFont(name: "Noteworthy", size: 20)!]), for: .normal)
         
     }
     

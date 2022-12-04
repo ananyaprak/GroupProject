@@ -35,12 +35,18 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         tableView.isUserInteractionEnabled = false
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        allTries = [currentUser?.value(forKey: "noobTries"), currentUser?.value(forKey: "gamerTries"), currentUser?.value(forKey: "proTries")]
+        allTimers = [currentUser?.value(forKey: "noobTime"), currentUser?.value(forKey: "gamerTime"), currentUser?.value(forKey: "proTime")]
+        tableView.reloadData()
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath) as! ScoreTableViewCell
         
         cell.gamemodeField.text = "\(gameModes[indexPath.row])"
-        cell.triesField.text = "\(allTries[indexPath.row])"
-        cell.durationField.text = "\(allTimers[indexPath.row])"
+        cell.triesField.text = "\(allTries[indexPath.row]!)"
+        cell.durationField.text = "\(allTimers[indexPath.row]!)"
         
         
         cell.backgroundColor = bgColor

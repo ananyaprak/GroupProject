@@ -523,7 +523,41 @@ class ViewController: UIViewController {
             if puzzleIndex! == (puzzleList.count - 1) {
                 msg = "You've completed all available puzzles :o"
                 
-                // SAVE TOTALS
+                // Get current highscore
+                let curNoobTries: Int = currentUser?.value(forKey: "noobTries") as! Int
+                let curGamerTries: Int = currentUser?.value(forKey: "gamerTries") as! Int
+                let curProTries: Int = currentUser?.value(forKey: "proTries") as! Int
+                
+                // Add all current tries from the three puzzles
+                let allThreeTries = puzzleList[0].totalTries + puzzleList[1].totalTries + puzzleList[2].totalTries
+                
+                // GET CURRENT HIGHSCORE TIME
+                // let curNoobTime: String = currentUser?.value(forKey: "noobTime") as! String
+                // let curGamerTime: String = currentUser?.value(forKey: "gamerTime") as! String
+                // let curProTime: String = currentUser?.value(forKey: "proTime") as! String
+                
+                // GET ALL THREE PUZZLES CURRENT TIMES
+                
+                // Check gamemode, then check if new highschore (or lowscore in this case) is better
+                if currentUser?.value(forKey: "gameMode") as! String == "Noob" {
+                    if curNoobTries > allThreeTries || curNoobTries == 0 {
+                        currentUser?.setValue(allThreeTries, forKey: "noobTries")
+                    }
+                    // CHECK AND SAVE NEW NOOB TIME HIGHSCORE HERE
+                } else if currentUser?.value(forKey: "gameMode") as! String == "Gamer" {
+                    if curGamerTries > allThreeTries || curGamerTries == 0 {
+                        currentUser?.setValue(allThreeTries, forKey: "gamerTries")
+                    }
+                    // CHECK AND SAVE NEW GAMER TIME HIGHSCORE HERE
+                } else {
+                    if curProTries > allThreeTries || curProTries == 0 {
+                        currentUser?.setValue(allThreeTries, forKey: "proTries")
+                    }
+                    // CHECK AND SAVE NEW PRO TIME HIGHSCORE HERE
+                }
+                
+                // Save new highscores
+                saveContext()
                 
             } else {
                 puzzleList[puzzleIndex! + 1].changeStatus(value: 1)
