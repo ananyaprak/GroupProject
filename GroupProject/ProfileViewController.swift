@@ -9,7 +9,9 @@ import UIKit
 
 
 
-class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    let picker = UIImagePickerController()
     
     @IBOutlet weak var profilePic: UIImageView!
     @IBOutlet weak var tableView: UITableView!
@@ -21,8 +23,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print(currentUser)
+        picker.delegate = self
         
         profileName.text = currentUser!.value(forKey: "accountEmail") as! String
         
@@ -57,6 +58,23 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return gameModes.count
+    }
+    
+    @IBAction func changePicture(_ sender: Any) {
+        
+        picker.allowsEditing = false
+        picker.sourceType = .photoLibrary
+        present(picker, animated: true)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let imagePick = info[.originalImage] as! UIImage
+        profilePic.image = imagePick
+        dismiss(animated: true)
     }
 
 }

@@ -24,6 +24,7 @@
 		568310FE29315A7200487087 /* GroupProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 568310FC29315A7200487087 /* GroupProject.xcdatamodeld */; };
 		56B1C4542939DDC000F23954 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B1C4532939DDC000F23954 /* ProfileViewController.swift */; };
 		56B1C4562939E6C000F23954 /* ScoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B1C4552939E6C000F23954 /* ScoreTableViewCell.swift */; };
+		F9B39C10293D4C7B0039DBB6 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B39C0F293D4C7B0039DBB6 /* PhotosViewController.swift */; };
 		F9D91CCE292DA66A0093E347 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9D91CCD292DA66A0093E347 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +47,7 @@
 		568310FD29315A7200487087 /* GroupProject.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GroupProject.xcdatamodel; sourceTree = "<group>"; };
 		56B1C4532939DDC000F23954 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		56B1C4552939E6C000F23954 /* ScoreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreTableViewCell.swift; sourceTree = "<group>"; };
+		F9B39C0F293D4C7B0039DBB6 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		F9D91CCD292DA66A0093E347 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -98,6 +100,7 @@
 				5631A3A328EFC0B0008518B8 /* Info.plist */,
 				F9D91CCD292DA66A0093E347 /* GoogleService-Info.plist */,
 				56B1C4552939E6C000F23954 /* ScoreTableViewCell.swift */,
+				F9B39C0F293D4C7B0039DBB6 /* PhotosViewController.swift */,
 			);
 			path = GroupProject;
 			sourceTree = "<group>";
@@ -191,6 +194,7 @@
 				568310FE29315A7200487087 /* GroupProject.xcdatamodeld in Sources */,
 				568310EC292AEED400487087 /* MainViewController.swift in Sources */,
 				560CA3F8291D8185003C79D8 /* TableViewController.swift in Sources */,
+				F9B39C10293D4C7B0039DBB6 /* PhotosViewController.swift in Sources */,
 				568310F4292C5E7F00487087 /* InstructionsViewController.swift in Sources */,
 				5631A39828EFC0AB008518B8 /* SceneDelegate.swift in Sources */,
 			);
