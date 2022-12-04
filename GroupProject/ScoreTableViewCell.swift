@@ -9,6 +9,10 @@ import UIKit
 
 class ScoreTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var gamemodeField: UILabel!
+    @IBOutlet weak var triesField: UILabel!
+    @IBOutlet weak var durationField: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -11,7 +11,10 @@ import UIKit
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var profilePic: UIImageView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var profileName: UILabel!
+    
     let textCellIdentifier = "TableCell"
 
     override func viewDidLoad() {
@@ -27,10 +30,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath) as! ScoreTableViewCell
         
-        cell.textLabel?.text = "\(gameModes[indexPath.row])"
-    
+        cell.gamemodeField.text = "\(gameModes[indexPath.row])"
+        
         cell.backgroundColor = bgColor
         cell.textLabel?.font = UIFont(name: "Noteworthy", size: 18)
     
