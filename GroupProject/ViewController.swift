@@ -522,6 +522,9 @@ class ViewController: UIViewController {
             var msg = ""
             if puzzleIndex! == (puzzleList.count - 1) {
                 msg = "You've completed all available puzzles :o"
+                
+                // SAVE TOTALS
+                
             } else {
                 puzzleList[puzzleIndex! + 1].changeStatus(value: 1)
                 if puzzleCoreData {

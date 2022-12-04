@@ -125,17 +125,23 @@ class LoginViewController: UIViewController {
                             settings.setValue("Noob", forKey: "gameMode")
                             settings.setValue(true, forKey: "showTime")
                             settings.setValue(true, forKey: "showTries")
+                            settings.setValue("N/A", forKey: "noobTime")
+                            settings.setValue(0, forKey: "noobTries")
+                            settings.setValue("N/A", forKey: "gamerTime")
+                            settings.setValue(0, forKey: "gamerTries")
+                            settings.setValue("N/A", forKey: "proTime")
+                            settings.setValue(0, forKey: "proTries")
                             self.saveContext()
                         }
                         for user in users {
                             if user.value(forKey: "accountEmail") as! String == self.emailField.text! {
+                                print("any")
                                 currentUser = user
                             }
                         }
                     } catch {
                         print(error)
                     }
-                    
                     self.errorMsg.text = ""
                     self.performSegue(withIdentifier: "LoginSegue", sender: nil)
                     self.emailField.text = nil
@@ -157,6 +163,12 @@ class LoginViewController: UIViewController {
                         settings.setValue("Noob", forKey: "gameMode")
                         settings.setValue(true, forKey: "showTime")
                         settings.setValue(true, forKey: "showTries")
+                        settings.setValue("N/A", forKey: "noobTime")
+                        settings.setValue(0, forKey: "noobTries")
+                        settings.setValue("N/A", forKey: "gamerTime")
+                        settings.setValue(0, forKey: "gamerTries")
+                        settings.setValue("N/A", forKey: "proTime")
+                        settings.setValue(0, forKey: "proTries")
                         self.saveContext()
                         self.performSegue(withIdentifier: "LoginSegue", sender: nil)
                         self.emailField.text = ""

@@ -14,11 +14,17 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var profilePic: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var profileName: UILabel!
+    var allTries = [currentUser?.value(forKey: "noobTries"), currentUser?.value(forKey: "gamerTries"), currentUser?.value(forKey: "proTries")]
+    var allTimers = [currentUser?.value(forKey: "noobTime"), currentUser?.value(forKey: "gamerTime"), currentUser?.value(forKey: "proTime")]
     
     let textCellIdentifier = "TableCell"
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(currentUser)
+        
+        profileName.text = currentUser!.value(forKey: "accountEmail") as! String
         
         view.backgroundColor = bgColor
         tableView.backgroundColor = bgColor
@@ -33,6 +39,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath) as! ScoreTableViewCell
         
         cell.gamemodeField.text = "\(gameModes[indexPath.row])"
+        cell.triesField.text = "\(allTries[indexPath.row])"
+        cell.durationField.text = "\(allTimers[indexPath.row])"
+        
         
         cell.backgroundColor = bgColor
         cell.textLabel?.font = UIFont(name: "Noteworthy", size: 18)
