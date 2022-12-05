@@ -33,6 +33,10 @@ class LoginViewController: UIViewController {
         
         view.backgroundColor = bgColor
         
+        logsignButton.layer.borderWidth = 1
+        logsignButton.layer.cornerRadius = 10
+        logsignButton.layer.borderColor = UIColor.black.cgColor
+        
         pwField.isSecureTextEntry = true
         confirmLabel.text = ""
         confirmField.isHidden = true
@@ -51,6 +55,11 @@ class LoginViewController: UIViewController {
         // TODO: add/edit core data
             // if not, add warning that progress is deleted
             
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+        super.touchesBegan(touches, with: event)
     }
     
     @IBAction func onSegmentChanged(_ sender: Any) {

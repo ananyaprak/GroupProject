@@ -106,6 +106,25 @@ class ViewController: UIViewController {
             guessButton.setAttributedTitle(attrTitle, for: UIControl.State.normal)
         }
         
+        across1.layer.borderWidth = 1
+        across1.layer.cornerRadius = 10
+        across1.layer.borderColor = UIColor.black.cgColor
+        across2.layer.borderWidth = 1
+        across2.layer.cornerRadius = 10
+        across2.layer.borderColor = UIColor.black.cgColor
+        across3.layer.borderWidth = 1
+        across3.layer.cornerRadius = 10
+        across3.layer.borderColor = UIColor.black.cgColor
+        down1.layer.borderWidth = 1
+        down1.layer.cornerRadius = 10
+        down1.layer.borderColor = UIColor.black.cgColor
+        down2.layer.borderWidth = 1
+        down2.layer.cornerRadius = 10
+        down2.layer.borderColor = UIColor.black.cgColor
+        down3.layer.borderWidth = 1
+        down3.layer.cornerRadius = 10
+        down3.layer.borderColor = UIColor.black.cgColor
+        
         labelList = [cwLabel0, cwLabel1, cwLabel2, cwLabel3, cwLabel4, cwLabel5, cwLabel6, cwLabel7, cwLabel8, cwLabel9, cwLabel10, cwLabel11, cwLabel12, cwLabel13, cwLabel14, cwLabel15, cwLabel16, cwLabel17, cwLabel18, cwLabel19, cwLabel20, cwLabel21, cwLabel22, cwLabel23, cwLabel24, cwLabel25, cwLabel26, cwLabel27, cwLabel28, cwLabel29, cwLabel30, cwLabel31, cwLabel32, cwLabel33]
         
         if puzzleImage.image == UIImage(named: "crossword1") {

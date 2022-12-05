@@ -37,11 +37,11 @@ Minor elements used:
 | Required Feature | Description | Who/Percentage Worked On |
 | --- | ----- | --- |
 | Login/Register | Set up Firebase, configure login/register/lougout paths | Ananya (100%) |
-| UI Design | Select and implement fonts, colors, and layout throughout app | Ananya (100%) |
+| UI Design | Select and implement fonts, colors, and layout throughout app | Ananya (80%), Zachary (20%) |
 | Settings | Allow users to configure data in puzzle table and change gamemode, save in coredata | Ananya (100%) |
 | Instructions | Explain gameplay how-to | Zachary (100%) |
 | Game Logic | Create and implement game using coding logic | Ananya (100%) |
-| Images | Create logo and crosswords | Ananya (80%), Zachary (20%) |
+| Images | Create logo and crosswords | Ananya (75%), Zachary (25%) |
 | Profile | Create profile page, show/save high scores and profile pic | Ananya (50%), Zachary (50%) |
 | Multithreading | Show and save elapsed time per puzzle | Ananya (100%) |
 

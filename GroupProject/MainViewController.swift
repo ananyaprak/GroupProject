@@ -23,10 +23,31 @@ class MainViewController: UIViewController {
         view.backgroundColor = bgColor
         
         htpButton.setAttributedTitle(NSAttributedString(string: "How To Play", attributes: [NSAttributedString.Key.font: UIFont(name: "Noteworthy", size: 20)!]), for: .normal)
-        tableButton.setAttributedTitle(NSAttributedString(string: "Puzzles", attributes: [NSAttributedString.Key.font: UIFont(name: "Noteworthy", size: 20)!]), for: .normal)
+        tableButton.setAttributedTitle(NSAttributedString(string: "Puzzles", attributes: [NSAttributedString.Key.font: UIFont(name: "Noteworthy", size: 30)!]), for: .normal)
         lgtButton.setAttributedTitle(NSAttributedString(string: "Logout", attributes: [NSAttributedString.Key.font: UIFont(name: "Noteworthy", size: 20)!]), for: .normal)
         stgButton.setAttributedTitle(NSAttributedString(string: "Settings", attributes: [NSAttributedString.Key.font: UIFont(name: "Noteworthy", size: 20)!]), for: .normal)
         prflButton.setAttributedTitle(NSAttributedString(string: "Profile", attributes: [NSAttributedString.Key.font: UIFont(name: "Noteworthy", size: 20)!]), for: .normal)
+        
+        htpButton.layer.borderWidth = 1
+        htpButton.layer.cornerRadius = 10
+        htpButton.layer.borderColor = UIColor.black.cgColor
+        
+        tableButton.layer.borderWidth = 1
+        tableButton.layer.cornerRadius = 10
+        tableButton.layer.borderColor = UIColor.black.cgColor
+        
+        lgtButton.layer.borderWidth = 1
+        lgtButton.layer.cornerRadius = 10
+        lgtButton.layer.borderColor = UIColor.black.cgColor
+        
+        stgButton.layer.borderWidth = 1
+        stgButton.layer.cornerRadius = 10
+        stgButton.layer.borderColor = UIColor.black.cgColor
+        
+        prflButton.layer.borderWidth = 1
+        prflButton.layer.cornerRadius = 10
+        prflButton.layer.borderColor = UIColor.black.cgColor
+        
         
     }
     
