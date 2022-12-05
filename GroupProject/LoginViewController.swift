@@ -50,8 +50,6 @@ class LoginViewController: UIViewController {
         
         // TODO: add/edit core data
             // if not, add warning that progress is deleted
-        // TODO: constrain everything
-            //  if possible, constrain labels to crossword
             
     }
     
@@ -118,26 +116,30 @@ class LoginViewController: UIViewController {
                     fetchRequest.sortDescriptors = [sortDescriptor]
                     do {
                         let users = try context.fetch(fetchRequest) as! [NSManagedObject]
-                        if users.count == 0 {
+                        var noData = true
+                        for user in users {
+                            if user.value(forKey: "accountEmail") as! String == self.emailField.text! {
+                                currentUser = user
+                                noData = false
+                            }
+                        }
+                        if noData {
                             let settings = NSEntityDescription.insertNewObject(forEntityName: "Settings", into: context)
                             account = self.emailField.text!
                             settings.setValue(account, forKey: "accountEmail")
                             settings.setValue("Noob", forKey: "gameMode")
                             settings.setValue(true, forKey: "showTime")
                             settings.setValue(true, forKey: "showTries")
-                            settings.setValue("N/A", forKey: "noobTime")
+                            settings.setValue(0, forKey: "noobTime")
+                            settings.setValue("N/A", forKey: "noobFancyTime")
                             settings.setValue(0, forKey: "noobTries")
-                            settings.setValue("N/A", forKey: "gamerTime")
+                            settings.setValue(0, forKey: "gamerTime")
+                            settings.setValue("N/A", forKey: "gamerFancyTime")
                             settings.setValue(0, forKey: "gamerTries")
-                            settings.setValue("N/A", forKey: "proTime")
+                            settings.setValue(0, forKey: "proTime")
+                            settings.setValue("N/A", forKey: "proFancyTime")
                             settings.setValue(0, forKey: "proTries")
                             self.saveContext()
-                        }
-                        for user in users {
-                            if user.value(forKey: "accountEmail") as! String == self.emailField.text! {
-                                print("any")
-                                currentUser = user
-                            }
                         }
                     } catch {
                         print(error)
@@ -163,11 +165,14 @@ class LoginViewController: UIViewController {
                         settings.setValue("Noob", forKey: "gameMode")
                         settings.setValue(true, forKey: "showTime")
                         settings.setValue(true, forKey: "showTries")
-                        settings.setValue("N/A", forKey: "noobTime")
+                        settings.setValue(0, forKey: "noobTime")
+                        settings.setValue("N/A", forKey: "noobFancyTime")
                         settings.setValue(0, forKey: "noobTries")
-                        settings.setValue("N/A", forKey: "gamerTime")
+                        settings.setValue(0, forKey: "gamerTime")
+                        settings.setValue("N/A", forKey: "gamerFancyTime")
                         settings.setValue(0, forKey: "gamerTries")
-                        settings.setValue("N/A", forKey: "proTime")
+                        settings.setValue(0, forKey: "proTime")
+                        settings.setValue("N/A", forKey: "proFancyTime")
                         settings.setValue(0, forKey: "proTries")
                         self.saveContext()
                         self.performSegue(withIdentifier: "LoginSegue", sender: nil)

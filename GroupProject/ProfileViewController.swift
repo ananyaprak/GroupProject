@@ -25,7 +25,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         picker.delegate = self
         
-        profileName.text = currentUser!.value(forKey: "accountEmail") as! String
+        profileName.text = currentUser!.value(forKey: "accountEmail") as? String
         
         view.backgroundColor = bgColor
         tableView.backgroundColor = bgColor
@@ -38,7 +38,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewWillAppear(_ animated: Bool) {
         allTries = [currentUser?.value(forKey: "noobTries"), currentUser?.value(forKey: "gamerTries"), currentUser?.value(forKey: "proTries")]
-        allTimers = [currentUser?.value(forKey: "noobTime"), currentUser?.value(forKey: "gamerTime"), currentUser?.value(forKey: "proTime")]
+        allTimers = [currentUser?.value(forKey: "noobFancyTime"), currentUser?.value(forKey: "gamerFancyTime"), currentUser?.value(forKey: "proFancyTime")]
         tableView.reloadData()
     }
     
@@ -46,8 +46,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath) as! ScoreTableViewCell
         
         cell.gamemodeField.text = "\(gameModes[indexPath.row])"
-        cell.triesField.text = "\(allTries[indexPath.row]!)"
-        cell.durationField.text = "\(allTimers[indexPath.row]!)"
+        cell.triesField.text = "\(allTries[indexPath.row] ?? "tries problem")"
+        cell.durationField.text = "\(allTimers[indexPath.row] ?? "timer problem")"
         
         
         cell.backgroundColor = bgColor

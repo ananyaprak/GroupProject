@@ -127,6 +127,9 @@ public var puzzleIndex:Int? = nil
 
 // bc coredata currently hates me
 let puzzleCoreData = false
+// editable variables for future updates
+let image = "crossword1"
+let numPuzzles = 3
 
 class TableViewController: UITableViewController {
     
@@ -136,10 +139,6 @@ class TableViewController: UITableViewController {
         super.viewDidLoad()
         
         view.backgroundColor = bgColor
-        
-        // editable variables for future updates
-        let image = "crossword1"
-        let numPuzzles = 3
         
         // do not uncomment/delete:
         // clearPuzzleData()
@@ -167,17 +166,38 @@ class TableViewController: UITableViewController {
         }
         
         if puzzleList.isEmpty {
-            
-            createPuzzle(name: "UT Austin", status: "Unlocked", image: image, acrossWords: ["bevo","longhorns","speedway"],  downWords: ["jester","hornsup","exams"])
-            
-            createPuzzle(name: "Winter", image: image, acrossWords: ["snow","avalanche","presents"], downWords: ["arctic","sweater","santa"])
-
-            createPuzzle(name: "Animals", image: image, acrossWords: ["fish","steerling","chipmunk"], downWords: ["agouti","cheetah","panda"])
-
+            resetPuzzles()
         }
         
         tableView.reloadData()
 
+    }
+    
+    func resetPuzzles() {
+        puzzleList = []
+        
+        createPuzzle(name: "UT Austin", status: "Unlocked", image: image, acrossWords: ["bevo","longhorns","speedway"],  downWords: ["jester","hornsup","exams"])
+        
+        createPuzzle(name: "Winter", image: image, acrossWords: ["snow","avalanche","presents"], downWords: ["arctic","sweater","santa"])
+
+        createPuzzle(name: "Animals", image: image, acrossWords: ["fish","steerling","chipmunk"], downWords: ["agouti","cheetah","panda"])
+        
+        tableView.reloadData()
+    }
+    
+    @IBAction func resetPressed(_ sender: Any) {
+        let controller = UIAlertController(
+            title: "Reset Puzzles?",
+            message: "You will lose your progress",
+            preferredStyle: .alert)
+        controller.addAction(UIAlertAction(
+            title: "yes",
+            style: .default,
+            handler: {_ in self.resetPuzzles()}))
+        controller.addAction(UIAlertAction(
+            title: "no",
+            style: .cancel))
+        present(controller, animated:true)
     }
     
     func clearWordData() {

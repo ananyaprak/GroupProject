@@ -9,6 +9,9 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    // for when constraints or other puzzles are added in future
+    let constraints = false
+    
     @IBOutlet weak var puzzleImage: UIImageView!
     @IBOutlet weak var totalTries: UILabel!
     @IBOutlet weak var wordTries: UILabel!
@@ -83,6 +86,8 @@ class ViewController: UIViewController {
     var seconds = 0
     var time = (0, 0, 0)
     var oldTime = (0, 0, 0)
+    var timeText = ""
+    var endTime = ""
     
     var currentCluesCompleted = [String]()
     
@@ -221,22 +226,24 @@ class ViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        placeLabels()
-//        var lstW = [CGFloat]()
-//        var lstH = [CGFloat]()
-//        for labelNum in 0...(labelList.count-1) {
-//            print("\(labelNum): \(labelList[labelNum].frame.midX), \(labelList[labelNum].frame.midY)")
-//            lstW.append(labelList[labelNum].frame.width)
-//            lstH.append(labelList[labelNum].frame.height)
-//        }
-//        print(view.frame.size)
-//        print(puzzleImage.frame.size)
-//        let sumW = lstW.reduce(0, +)
-//        let avgW = sumW / CGFloat(lstW.count)
-//        print(avgW)
-//        let sumH = lstH.reduce(0, +)
-//        let avgH = sumH / CGFloat(lstH.count)
-//        print(avgH)
+        if constraints {
+            placeLabels()
+            var lstW = [CGFloat]()
+            var lstH = [CGFloat]()
+            for labelNum in 0...(labelList.count-1) {
+                print("\(labelNum): \(labelList[labelNum].frame.midX), \(labelList[labelNum].frame.midY)")
+                lstW.append(labelList[labelNum].frame.width)
+                lstH.append(labelList[labelNum].frame.height)
+            }
+            print(view.frame.size)
+            print(puzzleImage.frame.size)
+            let sumW = lstW.reduce(0, +)
+            let avgW = sumW / CGFloat(lstW.count)
+            print(avgW)
+            let sumH = lstH.reduce(0, +)
+            let avgH = sumH / CGFloat(lstH.count)
+            print(avgH)
+        }
     }
     
     override func  viewWillDisappear(_ animated: Bool) {
@@ -254,26 +261,26 @@ class ViewController: UIViewController {
         var down1x = CGFloat(0)
         var down2Labels = [UILabel]()
         var down2x = CGFloat(0)
-        var down3Labels = [UILabel]()
-        var down3x = CGFloat(0)
-        var down4Labels = [UILabel]()
-        var down4x = CGFloat(0)
-        var down5Labels = [UILabel]()
-        var down5x = CGFloat(0)
+        let down3Labels = [UILabel]()
+        let down3x = CGFloat(0)
+        let down4Labels = [UILabel]()
+        let down4x = CGFloat(0)
+        let down5Labels = [UILabel]()
+        let down5x = CGFloat(0)
         var down6Labels = [UILabel]()
         var down6x = CGFloat(0)
-        var across1Labels = [UILabel]()
-        var across1y = CGFloat(0)
-        var across2Labels = [UILabel]()
-        var across2y = CGFloat(0)
+        let across1Labels = [UILabel]()
+        let across1y = CGFloat(0)
+        let across2Labels = [UILabel]()
+        let across2y = CGFloat(0)
         var across3Labels = [UILabel]()
         var across3y = CGFloat(0)
         var across4Labels = [UILabel]()
         var across4y = CGFloat(0)
         var across5Labels = [UILabel]()
         var across5y = CGFloat(0)
-        var across6Labels = [UILabel]()
-        var across6y = CGFloat(0)
+        let across6Labels = [UILabel]()
+        let across6y = CGFloat(0)
         let lists = [down1Labels, down2Labels, down3Labels, down4Labels, down5Labels, down6Labels, across1Labels, across2Labels, across3Labels, across4Labels, across5Labels, across6Labels]
         let coords = [down1x, down2x, down3x, down4x, down5x, down6x, across1y, across2y, across3y, across4y, across5y, across6y]
         var changeY = CGFloat(0)
@@ -314,40 +321,64 @@ class ViewController: UIViewController {
         }
     }
     
-    // TODO: move labels programatically
+    func makeFancyTime(seconds:Int, end:Bool) {
+        time = convertSeconds(seconds: seconds)
+        
+        var time0 = ""
+        var time1 = ""
+        var time2 = ""
+        
+        if end {
+            if time.0 < 10 {
+                time0 = String(0) + String(time.0)
+            } else {
+                time0 = String(time.0)
+            }
+            if time.1 < 10 {
+                time1 = String(0) + String(time.1)
+            } else {
+                time1 = String(time.1)
+            }
+            if time.2 < 10 {
+                time2 = String(0) + String(time.2)
+            } else {
+                time2 = String(time.2)
+            }
+            
+            endTime = "\(time0):\(time1):\(time2)"
+        } else {
+            if time.0 + oldTime.0 < 10 {
+                time0 = String(0) + String(time.0 + oldTime.0)
+            } else {
+                time0 = String(time.0 + oldTime.0)
+            }
+            if time.1 + oldTime.1 < 10 {
+                time1 = String(0) + String(time.1 + oldTime.1)
+            } else {
+                time1 = String(time.1 + oldTime.1)
+            }
+            if time.2 + oldTime.2 < 10 {
+                time2 = String(0) + String(time.2 + oldTime.2)
+            } else {
+                time2 = String(time.2 + oldTime.2)
+            }
+            
+            timeText = "\(time0):\(time1):\(time2)"
+        }
+    }
     
     func runMain(seconds:Int, duration:UInt64) {
             mainQueue.async {
-                self.time = self.convertSeconds(seconds:self.seconds)
+                self.makeFancyTime(seconds: seconds, end: false)
+                self.durationLabel.text = "Elapsed Time: \(self.timeText)"
                 
-                var time0 = ""
-                var time1 = ""
-                var time2 = ""
-                if self.time.0 + self.oldTime.0 < 10 {
-                    time0 = String(0) + String(self.time.0 + self.oldTime.0)
-                } else {
-                    time0 = String(self.time.0 + self.oldTime.0)
-                }
-                if self.time.1 + self.oldTime.1 < 10 {
-                    time1 = String(0) + String(self.time.1 + self.oldTime.1)
-                } else {
-                    time1 = String(self.time.1 + self.oldTime.1)
-                }
-                if self.time.2 + self.oldTime.2 < 10 {
-                    time2 = String(0) + String(self.time.2 + self.oldTime.2)
-                } else {
-                    time2 = String(self.time.2 + self.oldTime.2)
-                }
-                
-                let timeText = "\(time0):\(time1):\(time2)"
-                self.durationLabel.text = "Elapsed Time: \(timeText)"
                 if puzzleCoreData {
                     corePuzzles[puzzleIndex!].setValue(duration, forKey: "elapsedTime")
-                    corePuzzles[puzzleIndex!].setValue(timeText, forKey: "fancyTime")
+                    corePuzzles[puzzleIndex!].setValue(self.timeText, forKey: "fancyTime")
                     self.saveContext()
                 } else {
                     puzzleList[puzzleIndex!].elapsedTime = duration
-                    puzzleList[puzzleIndex!].fancyTime = timeText
+                    puzzleList[puzzleIndex!].fancyTime = self.timeText
                 }
             }
     }
@@ -523,40 +554,46 @@ class ViewController: UIViewController {
             if puzzleIndex! == (puzzleList.count - 1) {
                 msg = "You've completed all available puzzles :o"
                 
-                // Get current highscore
                 let curNoobTries: Int = currentUser?.value(forKey: "noobTries") as! Int
                 let curGamerTries: Int = currentUser?.value(forKey: "gamerTries") as! Int
                 let curProTries: Int = currentUser?.value(forKey: "proTries") as! Int
-                
-                // Add all current tries from the three puzzles
                 let allThreeTries = puzzleList[0].totalTries + puzzleList[1].totalTries + puzzleList[2].totalTries
                 
-                // GET CURRENT HIGHSCORE TIME
-                // let curNoobTime: String = currentUser?.value(forKey: "noobTime") as! String
-                // let curGamerTime: String = currentUser?.value(forKey: "gamerTime") as! String
-                // let curProTime: String = currentUser?.value(forKey: "proTime") as! String
+                let curNoobTime: UInt64 = currentUser?.value(forKey: "noobTime") as! UInt64
+                let curGamerTime: UInt64 = currentUser?.value(forKey: "gamerTime") as! UInt64
+                let curProTime: UInt64 = currentUser?.value(forKey: "proTime") as! UInt64
+                let allThreeTimes = puzzleList[0].elapsedTime + puzzleList[1].elapsedTime + puzzleList[2].elapsedTime
                 
-                // GET ALL THREE PUZZLES CURRENT TIMES
-                
-                // Check gamemode, then check if new highschore (or lowscore in this case) is better
+                let timeInterval = Double(allThreeTimes) / 1_000_000_000
+                let seconds = Int(round(timeInterval))
+                makeFancyTime(seconds: seconds, end: true)
+
                 if currentUser?.value(forKey: "gameMode") as! String == "Noob" {
                     if curNoobTries > allThreeTries || curNoobTries == 0 {
                         currentUser?.setValue(allThreeTries, forKey: "noobTries")
                     }
-                    // CHECK AND SAVE NEW NOOB TIME HIGHSCORE HERE
+                    if curNoobTime > allThreeTimes || curNoobTime == 0 {
+                        currentUser?.setValue(allThreeTimes, forKey: "noobTime")
+                        currentUser?.setValue(endTime, forKey: "noobFancyTime")
+                    }
                 } else if currentUser?.value(forKey: "gameMode") as! String == "Gamer" {
                     if curGamerTries > allThreeTries || curGamerTries == 0 {
                         currentUser?.setValue(allThreeTries, forKey: "gamerTries")
                     }
-                    // CHECK AND SAVE NEW GAMER TIME HIGHSCORE HERE
+                    if curGamerTime > allThreeTimes || curGamerTime == 0 {
+                        currentUser?.setValue(allThreeTimes, forKey: "gamerTime")
+                        currentUser?.setValue(endTime, forKey: "gamerFancyTime")
+                    }
                 } else {
                     if curProTries > allThreeTries || curProTries == 0 {
                         currentUser?.setValue(allThreeTries, forKey: "proTries")
                     }
-                    // CHECK AND SAVE NEW PRO TIME HIGHSCORE HERE
+                    if curProTime > allThreeTimes || curProTime == 0 {
+                        currentUser?.setValue(allThreeTimes, forKey: "proTime")
+                        currentUser?.setValue(endTime, forKey: "proFancyTime")
+                    }
                 }
-                
-                // Save new highscores
+
                 saveContext()
                 
             } else {
@@ -592,13 +629,13 @@ class ViewController: UIViewController {
     
     @IBAction func guessPressed(_ sender: Any) {
         if currentWord != nil {
-            if guessField.text!.count == 0 {
+            if guessField.text!.lowercased().count == 0 {
                 wordTries.text = "Don't forget to guess!"
-            } else if guessField.text!.count != currentWord!.name.count {
+            } else if guessField.text!.lowercased().count != currentWord!.name.count {
                 wordTries.text = "Invalid - check number of letters"
-            } else if guessField.text != currentWord!.name {
+            } else if guessField.text!.lowercased() != currentWord!.name {
                 incrementTries(correct: false)
-                let guessedWord = Array(guessField.text!)
+                let guessedWord = Array(guessField.text!.lowercased())
                 let clueLetters = Array(currentWord!.name)
                 for guessedLetterInd in 0...(guessedWord.count-1) {
                     
@@ -626,7 +663,7 @@ class ViewController: UIViewController {
                     
                     updateBlanks(word:currentWord!.name)
                 }
-            } else if guessField.text == currentWord?.name {
+            } else if guessField.text!.lowercased() == currentWord?.name {
                 wordGuessed()
             }
         } else {
