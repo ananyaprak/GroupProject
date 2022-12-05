@@ -346,6 +346,7 @@
 				DEVELOPMENT_TEAM = Q72TRS5FB3;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GroupProject/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Crossle: Sprint!";
 				INFOPLIST_KEY_NSCameraUsageDescription = "weewoo lemme see u";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -377,6 +378,7 @@
 				DEVELOPMENT_TEAM = Q72TRS5FB3;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GroupProject/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Crossle: Sprint!";
 				INFOPLIST_KEY_NSCameraUsageDescription = "weewoo lemme see u";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
