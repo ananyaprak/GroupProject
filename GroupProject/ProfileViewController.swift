@@ -6,8 +6,7 @@
 //
 
 import UIKit
-
-
+import AVFoundation
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -62,9 +61,82 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func changePicture(_ sender: Any) {
         
+        let controller = UIAlertController(
+            title: "Change Picture",
+            message: "",
+            preferredStyle: .alert)
+        controller.addAction(UIAlertAction(
+            title: "Choose from Library",
+            style: .default,
+            handler: {_ in self.library()}))
+        controller.addAction(UIAlertAction(
+            title: "Take Picture",
+            style: .default,
+            handler: {_ in self.camera()}))
+        controller.addAction(UIAlertAction(
+            title: "Cancel",
+            style: .cancel))
+        present(controller, animated:true)
+    }
+    
+    func library() {
         picker.allowsEditing = false
         picker.sourceType = .photoLibrary
         present(picker, animated: true)
+    }
+    
+    func camera() {
+        if UIImagePickerController.availableCaptureModes(for: .rear) != nil {
+            switch AVCaptureDevice.authorizationStatus(for: .video) {
+            case .notDetermined:
+                AVCaptureDevice.requestAccess(for: .video) {
+                    accessGranted in
+                    guard accessGranted == true else { return }
+                }
+            case .authorized:
+                break
+            default:
+                print("Access denied")
+                return
+            }
+            
+            picker.allowsEditing = false
+            picker.sourceType = .camera
+            picker.cameraCaptureMode = .photo
+            present(picker, animated: true)
+        } else {
+            
+            let alertVC = UIAlertController(title: "No camera", message: "This device doesn't have a rear camera", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default)
+            alertVC.addAction(okAction)
+            present(alertVC, animated: true)
+        }
+        
+        if UIImagePickerController.availableCaptureModes(for: .front) != nil {
+            switch AVCaptureDevice.authorizationStatus(for: .video) {
+            case .notDetermined:
+                AVCaptureDevice.requestAccess(for: .video) {
+                    accessGranted in
+                    guard accessGranted == true else { return }
+                }
+            case .authorized:
+                break
+            default:
+                print("Access denied")
+                return
+            }
+            
+            picker.allowsEditing = false
+            picker.sourceType = .camera
+            picker.cameraCaptureMode = .photo
+            present(picker, animated: true)
+        } else {
+            
+            let alertVC = UIAlertController(title: "No camera", message: "This device doesn't have a front camera", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default)
+            alertVC.addAction(okAction)
+            present(alertVC, animated: true)
+        }
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -76,5 +148,4 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         profilePic.image = imagePick
         dismiss(animated: true)
     }
-
 }
