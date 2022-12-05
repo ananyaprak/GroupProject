@@ -1,4 +1,4 @@
-**Name of Project:** Crossle\
+**Name of Project:** Crossle: Sprint!\
 **Team Members:** Ananya Prakash, Zachary Bricken\
 **Dependencies:** Xcode 13.4.1, Swift 5.6.1, FirebaseAuth\
 
@@ -19,7 +19,7 @@ Some features have been omitted due to 2 of our members dropping the class (with
 - [x] Non-default fonts and colors used
 
 Two major elements used out of the following: Core Data, User Profile path using camera and photo library, Multithreading, SwiftUI. We implemented:
-- [ ] Core Data
+- [x] Core Data
 - [x] Multithreading
 
 Minor elements used:

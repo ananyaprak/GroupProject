@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E258" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21G72" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Letter" representedClassName="Letter" syncable="YES" codeGenerationType="class">
         <attribute name="known" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
     </entity>
@@ -23,6 +23,7 @@
         <attribute name="noobTime" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="noobTries" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="proFancyTime" optional="YES" attributeType="String"/>
+        <attribute name="profilePic" optional="YES" attributeType="Binary"/>
         <attribute name="proTime" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="proTries" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="showTime" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
@@ -35,9 +36,9 @@
         <attribute name="yellowLetters" optional="YES" attributeType="Transformable"/>
     </entity>
     <elements>
-        <element name="Puzzle" positionX="-63" positionY="-18" width="128" height="149"/>
-        <element name="Settings" positionX="-18" positionY="99" width="128" height="224"/>
-        <element name="Word" positionX="-54" positionY="63" width="128" height="89"/>
         <element name="Letter" positionX="-36" positionY="108" width="128" height="44"/>
+        <element name="Puzzle" positionX="-63" positionY="-18" width="128" height="149"/>
+        <element name="Settings" positionX="-18" positionY="99" width="128" height="239"/>
+        <element name="Word" positionX="-54" positionY="63" width="128" height="89"/>
     </elements>
 </model>

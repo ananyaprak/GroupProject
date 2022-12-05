@@ -139,6 +139,7 @@ class LoginViewController: UIViewController {
                             settings.setValue(0, forKey: "proTime")
                             settings.setValue("N/A", forKey: "proFancyTime")
                             settings.setValue(0, forKey: "proTries")
+                            settings.setValue(nil, forKey: "profilePic")
                             self.saveContext()
                             currentUser = settings
                         }
@@ -175,6 +176,7 @@ class LoginViewController: UIViewController {
                         settings.setValue(0, forKey: "proTime")
                         settings.setValue("N/A", forKey: "proFancyTime")
                         settings.setValue(0, forKey: "proTries")
+                        settings.setValue(nil, forKey: "profilePic")
                         self.saveContext()
                         self.performSegue(withIdentifier: "LoginSegue", sender: nil)
                         self.emailField.text = ""

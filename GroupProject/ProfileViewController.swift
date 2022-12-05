@@ -7,6 +7,7 @@
 
 import UIKit
 import AVFoundation
+import CoreData
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -24,8 +25,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         picker.delegate = self
         
+        if currentUser?.value(forKey: "profilePic") != nil {
+            let profilePicData = currentUser?.value(forKey: "profilePic") as! Data
+            profilePic.image = UIImage(data: profilePicData)
+        }
         profileName.text = currentUser!.value(forKey: "accountEmail") as? String
-        
         view.backgroundColor = bgColor
         tableView.backgroundColor = bgColor
 
@@ -146,6 +150,23 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let imagePick = info[.originalImage] as! UIImage
         profilePic.image = imagePick
+        let imageData = imagePick.jpegData(compressionQuality: 1.0)
+        currentUser!.setValue(imageData, forKey: "profilePic")
+        self.saveContext()
         dismiss(animated: true)
+    }
+    
+    func saveContext() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
     }
 }
