@@ -10,12 +10,14 @@ import CoreData
 
 let settings = NSEntityDescription.insertNewObject(forEntityName: "Settings", into: context)
 let gameModes = ["Noob", "Gamer", "Pro"]
+var reset = false
 
 class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     var gameModeNew:String = "Noob"
     var showTimeNew:Bool = true
     var showTriesNew:Bool = true
+    var currentMode = currentUser?.value(forKey: "gameMode") as! String
     
     @IBOutlet weak var modePicker: UIPickerView!
     @IBOutlet weak var modeDescription: UILabel!
@@ -35,7 +37,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         setModeDescription()
 
     }
-    
+        
     override func viewWillAppear(_ animated: Bool) {
         modePicker.selectRow(gameModes.firstIndex(of: currentUser?.value(forKey: "gameMode") as! String)!, inComponent: 0, animated: true)
         setModeDescription()
@@ -57,10 +59,36 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        gameModeNew = gameModes[row]
-        currentUser?.setValue(gameModeNew, forKey: "gameMode")
-        saveContext()
-        setModeDescription()
+        let chosen = gameModes[row]
+        if chosen != currentMode {
+            let controller = UIAlertController(
+                title: "Warning!",
+                message: "Changing gamemodes mid-game will reset your progress. Continue?",
+                preferredStyle: .alert)
+            controller.addAction(UIAlertAction(
+                title: "aaa, no!",
+                style: .cancel,
+                handler: {_ in self.resetMode(doIt: false, row: row)}))
+            controller.addAction(UIAlertAction(
+                title: "yep, reset it",
+                style: .default,
+                handler: {_ in self.resetMode(doIt: true, row: row)}))
+            present(controller, animated:true)
+        }
+    }
+    
+    func resetMode(doIt:Bool, row:Int) {
+        if doIt {
+            gameModeNew = gameModes[row]
+            currentUser?.setValue(gameModeNew, forKey: "gameMode")
+            currentMode = gameModeNew
+            saveContext()
+            setModeDescription()
+            reset = true
+        } else {
+            modePicker.selectRow(gameModes.firstIndex(of: currentUser?.value(forKey: "gameMode") as! String)!, inComponent: 0, animated: true)
+            setModeDescription()
+        }
     }
     
     func setModeDescription() {

@@ -165,7 +165,7 @@ class TableViewController: UITableViewController {
             }
         }
         
-        if puzzleList.isEmpty {
+        if puzzleList.isEmpty || reset == true {
             resetPuzzles()
         }
         
@@ -183,6 +183,8 @@ class TableViewController: UITableViewController {
         createPuzzle(name: "Animals", image: image, acrossWords: ["fish","steerling","chipmunk"], downWords: ["agouti","cheetah","panda"])
         
         tableView.reloadData()
+        
+        reset = false
     }
     
     @IBAction func resetPressed(_ sender: Any) {
