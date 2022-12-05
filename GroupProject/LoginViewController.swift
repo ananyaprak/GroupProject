@@ -140,6 +140,7 @@ class LoginViewController: UIViewController {
                             settings.setValue("N/A", forKey: "proFancyTime")
                             settings.setValue(0, forKey: "proTries")
                             self.saveContext()
+                            currentUser = settings
                         }
                     } catch {
                         print(error)
