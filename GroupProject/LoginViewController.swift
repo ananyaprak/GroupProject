@@ -17,7 +17,7 @@ let context = appDelegate.persistentContainer.viewContext
 
 let bgColor = UIColor(red: 246/255.0, green: 216/255.0, blue: 156/255.0, alpha: 1.0)
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var pwField: UITextField!
@@ -32,6 +32,10 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = bgColor
+        
+        emailField.delegate = self
+        pwField.delegate = self
+        confirmField.delegate = self
         
         logsignButton.layer.borderWidth = 1
         logsignButton.layer.cornerRadius = 10
@@ -200,6 +204,12 @@ class LoginViewController: UIViewController {
             }
         }
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
+    }
+    
     
     func saveContext() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
