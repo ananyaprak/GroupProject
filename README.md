@@ -2,7 +2,7 @@
 **Team Members:** Ananya Prakash, Zachary Bricken\
 **Dependencies:** Xcode 13.4.1, Swift 5.6.1, iOS 15.5, FirebaseAuth
 
-**Special Instructions:**
+**Special Instructions**
 - Use iPhone 13 Pro Max Simulator in Portrait Mode
 - Puzzle answers are listed here: https://docs.google.com/document/d/1q9Zl8nX0a1lPkDyOhJu2InKX8qoFwc27mOWnSGZjfmk/edit?usp=sharing
 - Please create an account to playtest
@@ -46,7 +46,7 @@ Minor elements used:
 
 https://github.com/ananyaprak/GroupProject/graphs/contributors
 
-**Future Updates**
+**Future Updates**\
 If we were to continue to update this app, we would love to implement the following (all of which we have already started creating the code for):
 - A second gamemode, where puzzle data is persistent across launches with core data
 - More puzzle formats, where labels are moved programmatically
