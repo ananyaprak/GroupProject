@@ -1,10 +1,11 @@
 **Name of Project:** Crossle: Sprint!\
 **Team Members:** Ananya Prakash, Zachary Bricken\
-**Dependencies:** Xcode 13.4.1, Swift 5.6.1, FirebaseAuth
+**Dependencies:** Xcode 13.4.1, Swift 5.6.1, iOS 15.5, FirebaseAuth
 
 **Special Instructions:**
 - Use iPhone 13 Pro Max Simulator in Portrait Mode
 - Puzzle answers are listed here: https://docs.google.com/document/d/1q9Zl8nX0a1lPkDyOhJu2InKX8qoFwc27mOWnSGZjfmk/edit?usp=sharing
+- Please create an account to playtest
 
 **Required Feature Checklist**\
 Some features have been omitted due to 2 of our members dropping the class (with permission from the Professor)
