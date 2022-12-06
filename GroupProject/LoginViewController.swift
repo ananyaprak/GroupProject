@@ -53,11 +53,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             logsignButton.setAttributedTitle(attrTitle, for: UIControl.State.normal)
         }
         
-        // do not uncomment/delete:
+        // DEBUGGING: do not uncomment/delete:
         // clearUserData()
-        
-        // TODO: add/edit core data
-            // if not, add warning that progress is deleted
             
     }
     

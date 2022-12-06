@@ -125,9 +125,9 @@ public var puzzleList:[PuzzleClass] = []
 public var corePuzzles:[NSManagedObject] = []
 public var puzzleIndex:Int? = nil
 
-// bc coredata currently hates me
+// FUTUREUPDATE: bc coredata currently hates me
 let puzzleCoreData = false
-// editable variables for future updates
+// FUTUREUPDATE: editable variables for future updates
 let image = "crossword1"
 let numPuzzles = 3
 
@@ -140,7 +140,7 @@ class TableViewController: UITableViewController {
         
         view.backgroundColor = bgColor
         
-        // do not uncomment/delete:
+        // DEBUGGING: do not uncomment/delete:
         // clearPuzzleData()
         
         if puzzleCoreData {

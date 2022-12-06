@@ -9,7 +9,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    // for when constraints or other puzzles are added in future
+    // FUTUREUPDATE: for when constraints or other puzzles are added in future
     let constraints = false
     
     @IBOutlet weak var puzzleImage: UIImageView!
@@ -566,7 +566,6 @@ class ViewController: UIViewController {
             timerOn = false
             puzzleList[puzzleIndex!].changeStatus(value: 2)
             if puzzleCoreData {
-                // minitodo: put this in puzzle class function
                 corePuzzles[puzzleIndex!].setValue("Completed", forKey: "status")
             }
             var msg = ""
@@ -618,7 +617,6 @@ class ViewController: UIViewController {
             } else {
                 puzzleList[puzzleIndex! + 1].changeStatus(value: 1)
                 if puzzleCoreData {
-                    // minitodo: put this in puzzle class function
                     corePuzzles[puzzleIndex!].setValue("Unlocked", forKey: "status")
                 }
                 msg = "You've unlocked the next puzzle :)"

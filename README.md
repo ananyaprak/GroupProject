@@ -35,12 +35,17 @@ Minor elements used:
 | Required Feature | Description | Who/Percentage Worked On |
 | --- | ----- | --- |
 | Login/Register | Set up Firebase, configure login/register/lougout paths | Ananya (100%) |
-| UI Design | Select and implement fonts, colors, and layout throughout app | Ananya (80%), Zachary (20%) |
+| UI Design | Select and implement fonts, colors, and layout throughout app | Ananya (70%), Zachary (30%) |
 | Settings | Allow users to configure data in puzzle table and change gamemode, save in coredata | Ananya (100%) |
 | Instructions | Explain gameplay how-to | Zachary (100%) |
 | Game Logic | Create and implement game using coding logic | Ananya (100%) |
-| Images | Create logo and crosswords | Ananya (75%), Zachary (25%) |
-| Profile | Create profile page, show/save high scores and profile pic | Ananya (50%), Zachary (50%) |
+| Images | Create logo, crosswords, and app pic | Ananya (65%), Zachary (35%) |
+| Profile | Create profile page, show/save high scores and profile pic | Ananya (25%), Zachary (75%) |
 | Multithreading | Show and save elapsed time per puzzle | Ananya (100%) |
 
 https://github.com/ananyaprak/GroupProject/graphs/contributors
+
+**Future Updates**
+If we were to continue to update this app, we would love to implement the following (all of which we have already started creating the code for):
+- A second gamemode, where puzzle data is persistent across launches with core data
+- More puzzle formats, where labels are moved programmatically
